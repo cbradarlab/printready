@@ -541,7 +541,7 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
     <p class="seo-intro">免費線上列印排版工具：圖片指定尺寸、證件照排版、標籤／貼紙、名片小卡、PDF 拼版、PDF 合併拆分、圖片轉 PDF 與 PDF 轉圖片。</p>
     <p class="product-principle">我們不幫你設計人生，也不管理資料。只負責把你想印的東西準備好。</p>
   </div>
-  <div class="badge">PUBLIC V1.3</div>
+  <div class="badge">PUBLIC V1.4</div>
 </header>
 
 <div class="privacy">🔒 圖片、PDF 與標籤內容都只在瀏覽器本機處理，不上傳伺服器。不需要登入、不建立帳號。網站僅使用匿名流量統計；PDF / Excel 工具的程式元件需由網路載入。</div>
@@ -1708,7 +1708,7 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
 </main>
 </div>
 
-<footer>PrintReady / 幫我印好 PUBLIC V1.3｜Local-first｜No login｜No file upload</footer>
+<footer>PrintReady / 幫我印好 PUBLIC V1.4｜Local-first｜No login｜No file upload</footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -7606,6 +7606,7 @@ function runTests(){
   test("CSV 簡化介面與自動欄位摘要可用",()=>typeof updateCsvAutoMapSummary==="function"&&!!$("csvAutoMapSummary")&&!!$("csvAdvancedMap")),
   test("Excel / XLSX 批量標籤引擎可用",()=>typeof readExcelLabelFile==="function"&&typeof applyExcelLabelSheet==="function"&&typeof normalizeLabelTable==="function"&&!!$("fileExcelLabel")),
   test("問題回報 / 功能許願集中送出入口可用",()=>typeof openFeedback==="function"&&typeof buildFeedbackText==="function"&&typeof FEEDBACK_FORM_ENDPOINT==="string"&&!!$("feedbackBugBtn")&&!!$("feedbackIdeaBtn")),
+  test("匿名功能使用統計可用",()=>typeof trackUsageEvent==="function"&&USAGE_TRACK_EVENTS.size===10&&USAGE_TRACK_ENDPOINT.includes("printready-usage.crzaybetray.workers.dev")),
   test("第一次使用導覽可用",()=>typeof showFirstUseGuide==="function"&&typeof openModeFromGuide==="function"&&!!$("onboardBackdrop")&&!!$("onboardStartBtn")),
   test("使用導覽可隨時重新開啟",()=>!!$("onboardOpenBtn")&&typeof showFirstUseGuide==="function"),
   test("正式首頁快速入口完整",()=>typeof openHomeMode==="function"&&document.querySelectorAll("[data-home-mode]").length===10),
@@ -7890,8 +7891,61 @@ function syncLabelPreviewZoomUi(){
   $("labelPreviewZoomBtn").classList.toggle("active",labelPreviewZoom===1.5);
 }
 
+
+const USAGE_TRACK_ENDPOINT="https://printready-usage.crzaybetray.workers.dev/track";
+const USAGE_TRACK_EVENTS=new Set([
+  "image","multi","photo","label","card",
+  "poster","pdf","booklet","convert","pdfedit"
+]);
+
+async function trackUsageEvent(event){
+  if(!USAGE_TRACK_EVENTS.has(event))return;
+
+  // 同一瀏覽分頁，同一功能最多計一次。
+  // 重新整理頁面仍不會重複；關閉分頁後再回來可視為新的使用工作階段。
+  const key=`printready_usage_seen_v1:${event}`;
+  try{
+    if(sessionStorage.getItem(key)==="1")return;
+    sessionStorage.setItem(key,"1");
+  }catch(_){}
+
+  try{
+    const response=await fetch(USAGE_TRACK_ENDPOINT,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({event}),
+      keepalive:true
+    });
+    if(!response.ok)throw new Error(`usage_http_${response.status}`);
+  }catch(_){
+    // 統計失敗不得影響主要工具；允許稍後再試。
+    try{sessionStorage.removeItem(key)}catch(__){}
+  }
+}
+
+const USAGE_CONTROL_MAP={
+  image:"imageControls",
+  multi:"multiControls",
+  photo:"photoControls",
+  label:"labelControls",
+  card:"cardControls",
+  poster:"posterControls",
+  pdf:"pdfControls",
+  booklet:"bookletControls",
+  convert:"convertControls",
+  pdfedit:"pdfeditControls"
+};
+
+Object.entries(USAGE_CONTROL_MAP).forEach(([event,id])=>{
+  const el=$(id);
+  if(!el)return;
+  el.addEventListener("click",()=>trackUsageEvent(event),true);
+  el.addEventListener("change",()=>trackUsageEvent(event),true);
+});
+
 function setMode(m){
  const oldMode=mode;
+ trackUsageEvent(m);
 
  // Leaving photo mode: remember its paper, then restore the paper used before entering.
  if(oldMode==="photo" && m!=="photo"){
@@ -8480,7 +8534,7 @@ function feedbackBrowserSummary(){
 }
 
 function feedbackVersion(){
-  return "PrintReady PUBLIC V1.3";
+  return "PrintReady PUBLIC V1.4";
 }
 
 function buildFeedbackText(){
@@ -8674,6 +8728,7 @@ function openInfoModal(kind){
         <li>PDF 與 Excel 功能目前仍需從網路載入程式元件，因此不是完全離線版。</li>
         <li>問題回報與功能許願會送到 PrintReady 的 Google 表單；不會附上你選過的檔名或檔案內容。</li>
         <li>網站使用 Cloudflare Web Analytics 做匿名流量統計，例如瀏覽次數、訪客概況與來源；不使用這項統計辨識個別使用者。</li>
+        <li>網站也會匿名記錄「哪一個工具被使用」的累計次數；只送出功能代碼，不送姓名、檔名、圖片、PDF、CSV 或 Excel 內容。同一瀏覽分頁內，同一功能最多計一次。</li>
       </ul>
     `;
   }else{
