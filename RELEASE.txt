@@ -1,0 +1,18 @@
+PrintReady PUBLIC V1 FINAL
+==========================
+
+Status: SEALED / FROZEN
+SHA256: adb0ac4adfb7b751b8d70233468674634339c24bf52b62caea34a3baf98bff31
+
+Entry:
+  index.html
+
+Product:
+  幫我印好 PrintReady
+
+Principle:
+  不要求登入，不管理使用者檔案。
+  專注把列印前的尺寸、排版與格式準備好。
+
+Note:
+  PDF / Excel runtime components currently require network access.
