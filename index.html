@@ -3,7 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>幫我印好 PUBLIC V1.2</title>
+<meta name="description" content="幫我印好是免費線上列印排版工具，可製作圖片指定尺寸、證件照、標籤貼紙、價格標籤、名片小卡、大圖分頁、PDF 拼版、PDF 合併拆分與圖片 PDF 互轉。免登入，檔案內容主要在瀏覽器本機處理。">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://cbradarlab.github.io/printready/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="幫我印好 PrintReady">
+<meta property="og:title" content="幫我印好｜圖片尺寸列印、標籤排版、PDF 整理免費工具">
+<meta property="og:description" content="免費線上列印排版工具：圖片指定尺寸、證件照、標籤貼紙、PDF 拼版、PDF 合併拆分、圖片與 PDF 互轉。免登入。">
+<meta property="og:url" content="https://cbradarlab.github.io/printready/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="幫我印好｜免費線上列印排版與 PDF 工具">
+<meta name="twitter:description" content="圖片指定尺寸、證件照、標籤貼紙、PDF 拼版與整理，免登入直接使用。">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "幫我印好 PrintReady",
+  "url": "https://cbradarlab.github.io/printready/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "inLanguage": "zh-TW",
+  "isAccessibleForFree": true,
+  "description": "免費線上列印排版工具，可處理圖片指定尺寸、證件照、標籤貼紙、名片小卡、大圖分頁、PDF 拼版、PDF 合併拆分及圖片 PDF 互轉。",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TWD"
+  }
+}
+</script>
+<title>幫我印好｜圖片尺寸列印、標籤排版、PDF 整理免費工具</title>
 <style>
 :root{
   --bg:#f4f5f7;--card:#fff;--text:#17191c;--muted:#6b7280;--line:#dde2e7;
@@ -16,6 +49,7 @@ body{margin:0;background:var(--bg);color:var(--text)}
 header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
 h1{margin:0;font-size:clamp(30px,4vw,46px);letter-spacing:-.04em}
 .tagline{margin:8px 0 0;color:var(--muted);line-height:1.7}
+.seo-intro{margin:9px 0 0;max-width:860px;color:var(--muted);font-size:14px;line-height:1.65}
 .badge{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:999px;font-size:13px;white-space:nowrap}
 .privacy{margin:16px 0 22px;padding:12px 14px;background:#edf8f2;border:1px solid #ccebdc;color:#235f47;border-radius:14px;font-size:14px}
 .mode-guide{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin:0 0 14px;box-shadow:0 4px 14px rgba(0,0,0,.035)}
@@ -504,9 +538,10 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
   <div>
     <h1>幫我印好</h1>
     <p class="tagline hero-tagline">圖片、標籤、卡片、PDF，不用自己算尺寸。<br>選你要做的事、放入檔案，下載可以直接使用的結果。</p>
+    <p class="seo-intro">免費線上列印排版工具：圖片指定尺寸、證件照排版、標籤／貼紙、名片小卡、PDF 拼版、PDF 合併拆分、圖片轉 PDF 與 PDF 轉圖片。</p>
     <p class="product-principle">我們不幫你設計人生，也不管理資料。只負責把你想印的東西準備好。</p>
   </div>
-  <div class="badge">PUBLIC V1.2</div>
+  <div class="badge">PUBLIC V1.3</div>
 </header>
 
 <div class="privacy">🔒 圖片、PDF 與標籤內容都只在瀏覽器本機處理，不上傳伺服器。不需要登入、不建立帳號。網站僅使用匿名流量統計；PDF / Excel 工具的程式元件需由網路載入。</div>
@@ -1673,7 +1708,7 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
 </main>
 </div>
 
-<footer>PrintReady / 幫我印好 PUBLIC V1.2｜Local-first｜No login｜No file upload</footer>
+<footer>PrintReady / 幫我印好 PUBLIC V1.3｜Local-first｜No login｜No file upload</footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -8445,7 +8480,7 @@ function feedbackBrowserSummary(){
 }
 
 function feedbackVersion(){
-  return "PrintReady PUBLIC V1.2";
+  return "PrintReady PUBLIC V1.3";
 }
 
 function buildFeedbackText(){
