@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>幫我印好 PUBLIC V1.1</title>
+<title>幫我印好 PUBLIC V1.2</title>
 <style>
 :root{
   --bg:#f4f5f7;--card:#fff;--text:#17191c;--muted:#6b7280;--line:#dde2e7;
@@ -506,10 +506,10 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
     <p class="tagline hero-tagline">圖片、標籤、卡片、PDF，不用自己算尺寸。<br>選你要做的事、放入檔案，下載可以直接使用的結果。</p>
     <p class="product-principle">我們不幫你設計人生，也不管理資料。只負責把你想印的東西準備好。</p>
   </div>
-  <div class="badge">PUBLIC V1.1</div>
+  <div class="badge">PUBLIC V1.2</div>
 </header>
 
-<div class="privacy">🔒 圖片、PDF 與標籤內容都只在瀏覽器本機處理，不上傳伺服器。不需要登入、不建立帳號。PDF / Excel 工具的程式元件需由網路載入。</div>
+<div class="privacy">🔒 圖片、PDF 與標籤內容都只在瀏覽器本機處理，不上傳伺服器。不需要登入、不建立帳號。網站僅使用匿名流量統計；PDF / Excel 工具的程式元件需由網路載入。</div>
 
 <div class="site-utility" aria-label="網站工具">
   <button id="homeTopBtn" type="button">🏠 回首頁</button>
@@ -1673,7 +1673,7 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
 </main>
 </div>
 
-<footer>PrintReady / 幫我印好 PUBLIC V1.1｜Local-first｜No login｜No file upload</footer>
+<footer>PrintReady / 幫我印好 PUBLIC V1.2｜Local-first｜No login｜No file upload</footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -8445,7 +8445,7 @@ function feedbackBrowserSummary(){
 }
 
 function feedbackVersion(){
-  return "PrintReady PUBLIC V1.1";
+  return "PrintReady PUBLIC V1.2";
 }
 
 function buildFeedbackText(){
@@ -8637,7 +8637,8 @@ function openInfoModal(kind){
         <li>你選擇的圖片、PDF、CSV、Excel 內容不會由本工具主動上傳到伺服器。</li>
         <li>常用設定只存於目前瀏覽器的本機儲存空間。</li>
         <li>PDF 與 Excel 功能目前仍需從網路載入程式元件，因此不是完全離線版。</li>
-        <li>問題回報目前只產生可複製文字，不會自動送出檔案或內容。</li>
+        <li>問題回報與功能許願會送到 PrintReady 的 Google 表單；不會附上你選過的檔名或檔案內容。</li>
+        <li>網站使用 Cloudflare Web Analytics 做匿名流量統計，例如瀏覽次數、訪客概況與來源；不使用這項統計辨識個別使用者。</li>
       </ul>
     `;
   }else{
@@ -8706,5 +8707,9 @@ $("resetGuideBtn").addEventListener("click",resetOnboardingSeen);
 
 })();
 </script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"
+  data-cf-beacon='{"token":"99ca23795108472eb88071a22c9971e1"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
