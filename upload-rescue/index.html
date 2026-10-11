@@ -1,0 +1,1533 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>上傳救援｜PrintReady 上傳救援 V1</title>
+<style>
+:root{
+  --bg:#f4f7f5;--card:#fff;--text:#1e2923;--muted:#6e7b73;--line:#d9e3dd;
+  --green:#2f6b4f;--green2:#eaf4ee;--soft:#f8faf9;--warn:#fff7dd;--warnline:#ead89b;
+  --danger:#fff0f0;--dangerline:#efcccc;--blue:#eef4fb;--blueline:#cfddec;--shadow:0 12px 35px rgba(32,56,43,.08)
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+body{overflow-x:hidden}.shell{width:min(1180px,100%);margin:auto;padding:20px 14px 64px}
+.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.top h1{margin:0;font-size:clamp(28px,4.5vw,42px);letter-spacing:-.035em}
+.sub{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.7;max-width:780px}.badge{background:#173d2b;color:#fff;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:950;white-space:nowrap}
+.privacy{margin:12px 0 14px;background:#eef6f1;border:1px solid #d4e7da;border-radius:13px;padding:11px 13px;font-size:12px;color:#456153;line-height:1.6}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}.title{font-size:16px;font-weight:950;margin:0 0 10px}.small{font-size:11px;color:var(--muted);line-height:1.6}
+.drop{border:2px dashed #b8c8bf;border-radius:14px;padding:30px 16px;text-align:center;background:#fbfdfc;cursor:pointer;transition:.15s}.drop.drag{background:#eef7f1;border-color:#5f9576}.drop strong{font-size:18px}
+.btn{border:0;border-radius:11px;padding:10px 12px;font-weight:900;cursor:pointer;background:#173d2b;color:#fff}.btn.secondary{background:#fff;color:var(--text);border:1px solid var(--line)}.btn.blue{background:#315f88}.btn.warn{background:#8a6618}.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.actions .btn{min-width:140px}
+.file-list{display:grid;gap:8px;margin-top:10px}.file-row{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px;background:#fafcfb}.thumb{width:58px;height:58px;border-radius:9px;object-fit:cover;background:#edf1ef}.file-name{font-size:12px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.file-meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.55}.iconbtn{border:1px solid var(--line);background:#fff;border-radius:9px;width:34px;height:34px;cursor:pointer}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}.tab{border:1px solid var(--line);background:#fff;color:#42564b;border-radius:999px;padding:8px 11px;font-size:11px;font-weight:900;cursor:pointer}.tab.active{background:#173d2b;color:#fff;border-color:#173d2b}
+.panel{display:none}.panel.active{display:block}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.field{min-width:0}.field label{display:block;font-size:11px;font-weight:900;margin-bottom:5px;color:#405248}.field select,.field input[type=number],.field input[type=text],.field input[type=color]{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff;color:var(--text);font:inherit;font-size:12px}.field input[type=color]{height:38px;padding:4px}.inline{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:#4d5e55;line-height:1.55}.inline input{margin-top:2px}
+.note{margin-top:9px;padding:9px 10px;border-radius:10px;font-size:11px;line-height:1.6}.note.info{background:var(--blue);border:1px solid var(--blueline);color:#31526f}.note.ok{background:var(--green2);border:1px solid #cfe5d5;color:#2f6544}.note.warn{background:var(--warn);border:1px solid var(--warnline);color:#725c1c}.note.err{background:var(--danger);border:1px solid var(--dangerline);color:#8b3939}
+.presetbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.preset{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:10px;font-weight:900;cursor:pointer}
+.sep{height:1px;background:#e8eeea;margin:13px 0}.sectionhead{font-size:12px;font-weight:950;margin-bottom:8px}
+.progress{height:8px;border-radius:999px;background:#e7ece9;overflow:hidden;margin-top:10px;display:none}.progress.show{display:block}.progress>div{height:100%;width:0%;background:#4d8b68;transition:width .12s linear}.status{min-height:20px;margin-top:8px;font-size:11px;font-weight:850;line-height:1.55}.issue-summary{display:none;margin-top:9px;border:1px solid #ead89b;background:#fff8dc;border-radius:11px;padding:10px 11px;font-size:11px;line-height:1.6;color:#725c1c}.issue-summary.show{display:block}.issue-summary b{color:#59450f}.issue-summary ul{margin:6px 0 0;padding-left:18px}.issue-summary li{margin:4px 0}.issue-jump{margin-left:6px;border:1px solid #d6c27b;background:#fff;border-radius:7px;padding:3px 7px;font-size:10px;font-weight:850;cursor:pointer}.issue-fix{margin-left:6px;border:1px solid #9f7f1d;background:#173d2b;color:#fff;border-radius:7px;padding:4px 8px;font-size:10px;font-weight:900;cursor:pointer}.issue-fix:disabled{opacity:.5;cursor:not-allowed}.status.ok{color:#2f6544}.status.warn{color:#765c19}.status.err{color:#8b3939}
+.result-list{display:grid;gap:9px}.result-row{border:1px solid var(--line);border-radius:13px;background:#fafcfb;padding:10px}.result-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start}.result-name{font-weight:900;font-size:12px;overflow-wrap:anywhere}.result-meta{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.6}.pill{display:inline-block;border-radius:999px;padding:4px 7px;font-size:9px;font-weight:950;margin-right:4px}.pill.ok{background:#e9f4ed;color:#2e6546}.pill.warn{background:#fff2c8;color:#765814}.pill.err{background:#fde8e8;color:#8f3a3a}.pill.info{background:#e9eefb;color:#405a8a}
+.preview-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.preview{border:1px solid var(--line);border-radius:10px;background:#f4f7f5;padding:6px}.preview b{display:block;font-size:9px;margin-bottom:5px;color:#526159}.preview img{display:block;width:100%;height:190px;object-fit:contain;background:#edf2ef;border-radius:7px}
+.check-list{display:grid;gap:8px;margin-top:10px}.check-row{border:1px solid var(--line);border-radius:11px;padding:9px;background:#fafcfb}.check-head{font-size:11px;font-weight:900}.check-items{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.lab{overflow:auto;border:1px solid var(--line);border-radius:11px;margin-top:10px}.lab table{border-collapse:collapse;width:100%;min-width:760px;font-size:10px}.lab th,.lab td{padding:8px 9px;border-bottom:1px solid #e8eeea;white-space:nowrap;text-align:left}.lab th{background:#f5f8f6;color:#506057;font-size:9px}.lab tr:last-child td{border-bottom:0}
+details{border:1px dashed #cbd7d0;border-radius:11px;padding:9px 10px;background:#fbfdfc;margin-top:10px}details summary{cursor:pointer;font-size:11px;font-weight:900}.help{margin-top:8px;font-size:10px;color:#596a60;line-height:1.65}
+footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margin-top:18px}
+.hidden{display:none!important}
+
+.quick-test{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.quick-card{border:1px solid var(--line);border-radius:12px;background:#fafcfb;padding:10px;font-size:11px;line-height:1.55}
+.quick-card b{display:block;margin-bottom:4px}
+.privacy-editor{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:12px;margin-top:10px}
+.canvas-wrap{border:1px solid var(--line);border-radius:12px;background:#eef2ef;padding:8px;overflow:hidden;min-height:420px;position:relative;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.canvas-wrap.panning{cursor:grabbing}.canvas-wrap.file-drag{border:2px dashed #2f6b4f;background:#eaf4ee}.privacy-drop-hint{position:absolute;inset:12px;display:flex;align-items:center;justify-content:center;text-align:center;border:2px dashed #b9c9c0;border-radius:10px;color:#5a6c62;font-size:13px;font-weight:850;line-height:1.7;background:rgba(255,255,255,.72);cursor:pointer;z-index:3}.privacy-drop-hint.hidden{display:none}.privacy-drop-hint span{display:block;font-size:11px;font-weight:650;color:#7b8b82;margin-top:6px}
+#privacyCanvas{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border-radius:8px;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none;will-change:transform;transform-origin:0 0}
+.privacy-side{display:grid;gap:8px;align-content:start}
+.privacy-side .field{margin:0}
+.privacy-list{display:grid;gap:6px;max-height:220px;overflow:auto}
+.privacy-item{border:1px solid var(--line);border-radius:9px;background:#fff;padding:7px 8px;font-size:10px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.privacy-item button{border:1px solid var(--line);background:#fff;border-radius:7px;cursor:pointer}
+.privacy-hint{font-size:10px;color:var(--muted);line-height:1.55}
+@media(max-width:800px){
+  .quick-test{grid-template-columns:1fr 1fr}
+  .privacy-editor{grid-template-columns:1fr}
+}
+
+@media(max-width:800px){
+  .top{display:block}.badge{display:inline-block;margin-top:9px}.grid2,.grid3,.grid4{grid-template-columns:1fr}.file-row{grid-template-columns:52px minmax(0,1fr) auto}.thumb{width:52px;height:52px}.preview-pair{grid-template-columns:1fr}.preview img{height:220px}.actions .btn{flex:1;min-width:130px}.shell{padding:14px 10px 50px}
+}
+
+/* ===== PrintReady 上傳救援 V1：簡化正式介面 ===== */
+.primary-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.tab.primary{
+  display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);
+  background:#fff;border-radius:14px;padding:13px 14px;color:var(--text);cursor:pointer;
+  box-shadow:0 5px 16px rgba(32,56,43,.04)
+}
+.tab.primary .nav-icon{font-size:25px;line-height:1}
+.tab.primary b{display:block;font-size:13px}
+.tab.primary small{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:650}
+.tab.primary.active{background:#173d2b;color:#fff;border-color:#173d2b}
+.tab.primary.active small{color:#dfe9e3}
+.more-tools{margin:8px 0 12px;border:1px solid var(--line);border-radius:12px;background:#fafcfb;padding:0}
+.more-tools summary{padding:10px 12px;font-size:11px;font-weight:900;cursor:pointer;list-style:none}
+.more-tools summary::-webkit-details-marker{display:none}
+.secondary-tabs{padding:0 10px 10px;margin:0}
+.big-presets{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.preset.big{padding:13px 10px;text-align:left;border-radius:12px}
+.preset.big b{display:block;font-size:17px;color:#173d2b}
+.preset.big span{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.45}
+.preset.big{position:relative;transition:.12s ease}
+.preset.big:hover{border-color:#7ea18d;background:#f7fbf8}
+.preset.big.selected{border:2px solid #173d2b;background:#eef6f1;box-shadow:0 0 0 2px rgba(23,61,43,.06)}
+.preset.big.selected::after{content:"✓ 已選";position:absolute;top:8px;right:9px;font-size:9px;font-weight:950;color:#2f6b4f}
+
+#globalProcessActions .sectionhead{margin-top:0}
+#processBtn{font-size:13px;padding:12px 18px}
+#resultsCard .title{margin-bottom:6px}
+@media(max-width:800px){
+  .primary-nav{grid-template-columns:1fr}
+  .big-presets{grid-template-columns:1fr 1fr}
+}
+
+
+.site-back{
+  display:inline-block;margin-top:9px;color:#2f6b4f;text-decoration:none;
+  font-size:12px;font-weight:900
+}
+.site-back:hover{text-decoration:underline}
+.pr-feedback-fabs{
+  position:fixed;right:16px;bottom:16px;z-index:1250;
+  display:flex;flex-direction:column;gap:8px
+}
+.pr-feedback-fab{
+  border:1px solid #d7e2dc;background:#fff;color:#24352b;
+  border-radius:999px;padding:9px 13px;font:inherit;font-size:12px;font-weight:900;
+  cursor:pointer;box-shadow:0 8px 24px rgba(20,35,27,.12)
+}
+.pr-feedback-fab:hover{background:#f4faf6}
+.pr-feedback-backdrop{
+  position:fixed;inset:0;z-index:1400;background:rgba(20,28,24,.38);
+  display:flex;align-items:center;justify-content:center;padding:18px
+}
+.pr-feedback-modal{
+  width:min(560px,100%);background:#fff;border:1px solid #d9e3dd;border-radius:16px;
+  padding:16px;box-shadow:0 18px 60px rgba(0,0,0,.22)
+}
+.pr-feedback-modal h3{margin:0 0 8px;font-size:18px}
+.pr-feedback-modal textarea,.pr-feedback-modal input{
+  width:100%;border:1px solid #d9e3dd;border-radius:10px;padding:10px 11px;
+  font:inherit;font-size:12px
+}
+.pr-feedback-modal textarea{min-height:130px;resize:vertical}
+.pr-feedback-result{margin-top:10px;font-size:12px;line-height:1.55}
+.pr-feedback-actions{display:flex;gap:8px;margin-top:12px}
+.pr-feedback-actions button{flex:1}
+@media(max-width:600px){
+  .pr-feedback-fabs{right:10px;bottom:10px}
+}
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top">
+    <div>
+      <h1>🚑 上傳救援</h1>
+      <div class="sub">圖片太大、尺寸不對、格式不符，或有資料不想公開？把圖片丟進來，選你遇到的問題，PrintReady 幫你處理到比較適合上傳。</div>
+      <a class="site-back" href="../index.html">← 回到幫我印好</a>
+    </div>
+    <div class="badge">V1</div>
+  </div>
+  <div class="privacy">🔒 圖片內容只在你的瀏覽器本機處理，不會上傳。支援 JPG / JPEG / PNG / WEBP。手機也能用，但批次處理與大圖片建議用電腦操作。</div>
+
+  <div class="card">
+    <div class="title">1｜把圖片丟進來</div>
+    <div id="drop" class="drop" tabindex="0" role="button">
+      <strong>拖曳圖片到這裡，或點一下選檔</strong>
+      <div class="small">可一次選多張｜建議先用 1～10 張測｜GIF 動畫、HEIC、SVG 不保證能安全處理</div>
+      <input id="fileInput" type="file" accept="image/*,.jpg,.jpeg,.png,.webp" multiple hidden>
+    </div>
+    <div id="fileList" class="file-list"></div>
+    <div class="actions">
+      <button id="clearFiles" class="btn secondary" type="button">清空</button>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="title">2｜你想解決什麼？</div>
+    <div class="primary-nav">
+      <button class="tab primary active" data-tab="quick">
+        <span class="nav-icon">📦</span><span><b>檔案太大</b><small>壓到 500KB / 1MB / 2MB…</small></span>
+      </button>
+      <button class="tab primary" data-tab="spec">
+        <span class="nav-icon">✅</span><span><b>網站規格不符</b><small>檢查後直接幫你修</small></span>
+      </button>
+      <button class="tab primary" data-tab="privacy">
+        <span class="nav-icon">🛡️</span><span><b>遮掉敏感資料</b><small>黑條、白色、馬賽克、模糊</small></span>
+      </button>
+    </div>
+    <details class="more-tools">
+      <summary>🧰 更多圖片工具</summary>
+      <div class="tabs secondary-tabs">
+        <button class="tab" data-tab="dimensions">📐 改尺寸 / 裁切 / 旋轉</button>
+        <button class="tab" data-tab="format">🔄 轉格式 / 移除拍攝資訊</button>
+        <button class="tab" data-tab="size">⚙️ 壓縮進階設定</button>
+      </div>
+    </details>
+
+    <div id="panel-quick" class="panel active">
+      <div class="sectionhead">你要壓到多小？</div>
+      <div class="big-presets">
+        <button type="button" class="preset big" data-preset="500k"><b>500 KB</b><span>常見表單 / 附件限制</span></button>
+        <button type="button" class="preset big" data-preset="1m"><b>1 MB</b><span>一般網站上傳</span></button>
+        <button type="button" class="preset big" data-preset="2m"><b>2 MB</b><span>照片 / 申請附件</span></button>
+        <button type="button" class="preset big" data-preset="5m"><b>5 MB</b><span>較寬鬆的上傳限制</span></button>
+      </div>
+      <div id="quickChoice" class="note ok"><b>目前選擇：2 MB</b>｜按下面「開始處理」即可。</div>
+      <div class="note info">原檔本來就符合限制時會直接保留，不會為了壓縮而重新編碼。</div>
+    </div>
+
+    <div id="panel-size" class="panel">
+      <div class="grid3">
+        <div class="field">
+          <label>限制檔案大小</label>
+          <select id="targetMode">
+            <option value="off">不限制</option>
+            <option value="100k">100 KB</option>
+            <option value="200k">200 KB</option>
+            <option value="300k">300 KB</option>
+            <option value="500k">500 KB</option>
+            <option value="1m">1 MB</option>
+            <option value="2m" selected>2 MB</option>
+            <option value="5m">5 MB</option>
+            <option value="10m">10 MB</option>
+            <option value="custom">自訂</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>自訂上限</label>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 90px;gap:7px">
+            <input id="customSize" type="number" min="1" max="102400" step="1" value="2" disabled>
+            <select id="customUnit" disabled>
+              <option value="mb" selected>MB</option>
+              <option value="kb">KB</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>壓縮策略</label>
+          <select id="compressMode">
+            <option value="recommended" selected>🌿 畫質優先</option>
+            <option value="force">🎯 一定要達標</option>
+            <option value="extreme">🧪 極限（測試用）</option>
+          </select>
+        </div>
+      </div>
+      <div class="note info">JPG / WebP 會在「解析度 × 品質」之間自動找平衡；PNG 若不轉 JPG，只能主要靠縮尺寸，壓縮空間會小很多。</div>
+      <div class="note info"><b>單位規則：</b>500 KB 就是 500×1024 bytes；1 MB 就是 1024 KB。畫面不會再把「500 KB」顯示成 512 KB。</div>
+    </div>
+
+    <div id="panel-dimensions" class="panel">
+      <div class="grid3">
+        <div class="field">
+          <label>改尺寸方式</label>
+          <select id="resizeMode">
+            <option value="keep" selected>保持原尺寸</option>
+            <option value="long">指定最長邊</option>
+            <option value="box">限制在寬 × 高以內</option>
+            <option value="width">指定寬度（等比例）</option>
+            <option value="height">指定高度（等比例）</option>
+            <option value="exact">強制指定寬 × 高</option>
+            <option value="percent">百分比縮放</option>
+          </select>
+        </div>
+        <div class="field"><label>寬 / 最長邊</label><input id="resizeW" type="number" min="1" max="20000" value="1600"></div>
+        <div class="field"><label>高 / 百分比</label><input id="resizeH" type="number" min="1" max="20000" value="1200"></div>
+      </div>
+      <div class="grid3" style="margin-top:10px">
+        <div class="field">
+          <label>裁切比例</label>
+          <select id="cropRatio">
+            <option value="keep" selected>不裁切</option>
+            <option value="1">1:1</option>
+            <option value="1.3333333333">4:3</option>
+            <option value="0.75">3:4</option>
+            <option value="1.5">3:2</option>
+            <option value="0.6666666667">2:3</option>
+            <option value="1.7777777778">16:9</option>
+            <option value="0.5625">9:16</option>
+            <option value="custom">自訂</option>
+          </select>
+        </div>
+        <div class="field"><label>自訂比例（寬 ÷ 高）</label><input id="customRatio" type="number" min="0.05" max="20" step="0.01" value="1" disabled></div>
+        <div class="field">
+          <label>裁切位置</label>
+          <select id="cropAnchor">
+            <option value="center">置中</option>
+            <option value="top">靠上</option>
+            <option value="bottom">靠下</option>
+            <option value="left">靠左</option>
+            <option value="right">靠右</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2" style="margin-top:10px">
+        <div class="field">
+          <label>旋轉</label>
+          <select id="rotation"><option value="0">不旋轉</option><option value="90">順時針 90°</option><option value="180">180°</option><option value="270">順時針 270°</option></select>
+        </div>
+        <label class="inline" style="margin-top:23px"><input id="allowUpscale" type="checkbox"> 允許放大圖片（預設不建議，放大不會增加真實細節）</label>
+      </div>
+    </div>
+
+    <div id="panel-format" class="panel">
+      <div class="grid3">
+        <div class="field">
+          <label>輸出格式</label>
+          <select id="outputFormat">
+            <option value="keep" selected>保持原格式</option>
+            <option value="image/jpeg">JPG</option>
+            <option value="image/png">PNG</option>
+            <option value="image/webp">WEBP</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>一般重新輸出品質</label>
+          <select id="baseQuality">
+            <option value="0.98">98% 高品質</option>
+            <option value="0.94" selected>94% 建議</option>
+            <option value="0.88">88% 較省空間</option>
+            <option value="0.80">80% 明顯壓縮</option>
+          </select>
+        </div>
+        <div class="field"><label>透明轉 JPG 的背景</label><input id="bgColor" type="color" value="#ffffff"></div>
+      </div>
+      <div style="margin-top:10px;display:grid;gap:7px">
+        <label class="inline"><input id="stripMeta" type="checkbox"> 🧹 移除拍攝資訊（重新輸出後不帶原始 EXIF / GPS / 拍攝資訊）</label>
+        <label class="inline"><input id="allowJpegFallback" type="checkbox" checked> PNG 太大時，允許為了達標改成 JPG（透明背景會套用上面的背景色）</label>
+      </div>
+      <div class="note warn">透明 PNG / WebP 轉 JPG 一定會失去透明背景；這不是錯誤，所以只有你允許時才會做。</div>
+    </div>
+
+    <div id="panel-spec" class="panel">
+      <div class="sectionhead">把對方網站的規格填進來</div>
+      <div class="note info">先按「只檢查」看原始檔哪裡不合格；按「幫我修到符合」後，上方清單會直接改成<strong>「原始問題 → 已修正結果」</strong>。如果仍有做不到的檔案，才會另外列出<strong>檔名＋原因＋建議</strong>。</div>
+      <div class="grid4">
+        <div class="field">
+          <label>最大檔案</label>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 88px;gap:7px">
+            <input id="specMaxSize" type="number" min="0" max="102400" step="1" value="2">
+            <select id="specMaxUnit">
+              <option value="mb" selected>MB</option>
+              <option value="kb">KB</option>
+            </select>
+          </div>
+          <div class="small" style="margin-top:4px">0 = 不限制</div>
+        </div>
+        <div class="field"><label>最小寬度 px（0=不限）</label><input id="specMinW" type="number" min="0" max="20000" value="0"></div>
+        <div class="field"><label>最小高度 px（0=不限）</label><input id="specMinH" type="number" min="0" max="20000" value="0"></div>
+        <div class="field"><label>指定比例</label><select id="specRatio"><option value="0">不限</option><option value="1">1:1</option><option value="1.3333333333">4:3</option><option value="0.75">3:4</option><option value="1.5">3:2</option><option value="0.6666666667">2:3</option><option value="1.7777777778">16:9</option><option value="0.5625">9:16</option></select></div>
+      </div>
+      <div class="grid3" style="margin-top:10px">
+        <div class="field"><label>最大寬度 px（0=不限）</label><input id="specMaxW" type="number" min="0" max="20000" value="0"></div>
+        <div class="field"><label>最大高度 px（0=不限）</label><input id="specMaxH" type="number" min="0" max="20000" value="0"></div>
+        <div class="field">
+          <label>允許格式</label>
+          <div style="display:grid;gap:4px;margin-top:7px">
+            <label class="inline"><input id="allowSpecJpg" type="checkbox" checked> JPG</label>
+            <label class="inline"><input id="allowSpecPng" type="checkbox" checked> PNG</label>
+            <label class="inline"><input id="allowSpecWebp" type="checkbox"> WEBP</label>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px;display:grid;gap:6px">
+        <label class="inline"><input id="specAllowUpscale" type="checkbox"> 若低於最小尺寸，允許放大到規格（不會增加真實細節）</label>
+        <label class="inline"><input id="specAllowLoseAlpha" type="checkbox"> 為了符合大小 / 格式，必要時允許透明圖轉 JPG</label>
+      </div>
+      <div class="actions">
+        <button id="checkSpecBtn" class="btn blue" type="button">只檢查，不修改</button>
+        <button id="fixSpecBtn" class="btn" type="button">幫我修到符合</button>
+      </div>
+      <div class="sectionhead" style="margin-top:10px">檔案檢查 / 修正狀態</div>
+      <div id="checkList" class="check-list"></div>
+    </div>
+
+    
+    <div id="panel-privacy" class="panel">
+      <div class="sectionhead">把不想公開的內容遮掉</div>
+      <div class="note warn"><b>重要：</b>姓名、電話、地址、帳號、QR Code 這類敏感資料，建議用「黑條」或「白色遮蓋」。模糊 / 馬賽克比較好看，但不是最強的隱私保護。</div>
+      <div class="privacy-editor">
+        <div id="privacyCanvasWrap" class="canvas-wrap">
+          <div id="privacyDropHint" class="privacy-drop-hint">
+            <div>把圖片拖到這裡<br>或點一下選檔
+              <span>載入後就能畫黑條、白色遮蓋、馬賽克或模糊</span>
+            </div>
+          </div>
+          <input id="privacyFileInput" type="file" accept="image/*,.jpg,.jpeg,.png,.webp" hidden>
+          <canvas id="privacyCanvas" width="900" height="600"></canvas>
+        </div>
+        <div class="privacy-side">
+          <div class="field">
+            <label>先把哪一張載入編輯器</label>
+            <select id="privacyImageSelect"></select>
+          </div>
+          <button id="privacyLoadBtn" class="btn secondary" type="button">載入這張</button>
+          <div class="field">
+            <label>遮蔽方式</label>
+            <select id="privacyMode">
+              <option value="black" selected>⬛ 黑條（最安全）</option>
+              <option value="white">⬜ 白色遮蓋</option>
+              <option value="mosaic">🟪 馬賽克</option>
+              <option value="blur">🌫️ 模糊</option>
+            </select>
+          </div>
+          <div class="privacy-hint">還沒載入圖片時：<b>直接把圖片檔拖進左邊空白區</b>。載入後：<b>圖片上拖曳＝新增遮蔽</b>；<b>抓住既有遮蔽＝移動遮蔽</b>。輸出後遮蔽會永久烤進新圖片裡。</div>
+          <div class="actions" style="margin-top:0">
+            <button id="privacyCenterBtn" class="btn secondary" type="button">重新置中圖片</button>
+            <button id="privacyUndoBtn" class="btn secondary" type="button">復原上一塊</button>
+            <button id="privacyClearBtn" class="btn secondary" type="button">全部清除</button>
+          </div>
+          <div class="sectionhead" style="margin:4px 0 0">已遮蔽區域</div>
+          <div id="privacyList" class="privacy-list"></div>
+          <button id="privacyDownloadBtn" class="btn" type="button">下載遮蔽後圖片</button>
+        </div>
+      </div>
+    </div>
+
+<div id="panel-lab" class="panel hidden">
+      <div class="note info">極限實驗室只會跑「第一張」圖片：2MB → 1MB → 500KB → 300KB → 200KB → 100KB。原檔本來就符合時會直接保留，不重新編碼。</div>
+      <div class="actions"><button id="labBtn" class="btn blue" type="button">🧪 跑完整極限表</button></div>
+      <div id="labWrap" class="lab hidden"><table><thead><tr><th>目標</th><th>實際</th><th>策略</th><th>尺寸</th><th>品質</th><th>縮小</th><th>結果</th><th>下載</th></tr></thead><tbody id="labBody"></tbody></table></div>
+      <div id="labSummary" class="note info hidden"></div>
+    </div>
+
+    <div id="globalProcessActions">
+      <div class="sep"></div>
+      <div class="sectionhead">套用到目前圖片</div>
+      <div class="actions">
+        <button id="processBtn" class="btn" type="button">開始處理</button>
+        <button id="resetSettings" class="btn secondary" type="button">重設設定</button>
+      </div>
+    </div>
+    <div id="progress" class="progress"><div></div></div>
+    <div id="status" class="status"></div>
+    <div id="issueSummary" class="issue-summary"></div>
+  </div>
+
+  <div id="resultsCard" class="card hidden">
+    <div class="title">3｜處理結果</div>
+    <div class="note info" style="margin-top:0;margin-bottom:10px"><b>V0.4.7：</b>如果你只要求「小於某個大小」，而原檔本來就已符合，會直接保留原檔，不重新編碼。按鈕也會明確標示「下載原檔」或「下載處理後檔案」。</div>
+    <div id="resultList" class="result-list"></div>
+    <div class="actions">
+      <button id="downloadZip" class="btn" type="button">下載全部 ZIP</button>
+      <button id="clearResults" class="btn secondary" type="button">清除結果</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">支援範圍</div>
+    <div class="grid2">
+      <div class="note ok" style="margin:0">
+        <b>✅ 目前支援</b><br>
+        指定大小壓縮、改尺寸、限制最長邊、指定寬高、比例裁切、旋轉、JPG/PNG/WebP 互轉、透明背景處理、移除原始照片資訊、批次處理、ZIP 下載、上傳規格檢查與一鍵修正、隱私遮蔽（黑條 / 白色遮蓋 / 馬賽克 / 模糊），編輯區可直接拖曳移動整張圖片。
+      </div>
+      <div class="note warn" style="margin:0">
+        <b>⛔ 目前不處理</b><br>
+        PDF 文字/表單、ZIP/7Z/RAR、影片、Office、GIF 動畫、HEIC/HEIF 仍需要不同引擎。這些之後可以逐項研究，但不會假裝用 Canvas 就能安全解決。
+      </div>
+    </div>
+  </div>
+
+  <footer>PrintReady｜圖片只在瀏覽器本機處理。大圖片、批次處理建議使用電腦操作。</footer>
+</div>
+
+<script>
+(()=>{
+  const $=id=>document.getElementById(id);
+
+  const RESCUE_USAGE_TRACK_ENDPOINT="https://printready-usage.crzaybetray.workers.dev/track";
+  const RESCUE_USAGE_EVENT="upload_rescue";
+  const RESCUE_USAGE_SEEN_KEY="printready_usage_seen_v1:upload_rescue";
+
+  async function trackRescueUsage(){
+    try{
+      if(sessionStorage.getItem(RESCUE_USAGE_SEEN_KEY)==="1")return;
+      const response=await fetch(RESCUE_USAGE_TRACK_ENDPOINT,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({event:RESCUE_USAGE_EVENT})
+      });
+      if(response.ok)sessionStorage.setItem(RESCUE_USAGE_SEEN_KEY,"1");
+    }catch(_){}
+  }
+
+  const RESCUE_FEEDBACK_FORM_ENDPOINT="https://docs.google.com/forms/d/e/1FAIpQLSeHTsDgpzZZKG1Uz1rNltKLOLUuOTmsIQaHReLP9GSzzPkzXQ/formResponse";
+  const RESCUE_FEEDBACK_FORM_FIELDS={
+    kind:"entry.689706475",
+    body:"entry.25719909",
+    tool:"entry.1215590251",
+    environment:"entry.1199012304",
+    contact:"entry.1654610563"
+  };
+  let rescueFeedbackKind="bug";
+
+  function rescueFeedbackBrowserSummary(){
+    const ua=navigator.userAgent||"";
+    const platform=navigator.userAgentData?.platform||navigator.platform||"";
+    return `PrintReady 上傳救援 V1 | ${platform} | ${ua}`;
+  }
+
+  function openRescueFeedback(kind){
+    rescueFeedbackKind=kind==="idea"?"idea":"bug";
+    const isBug=rescueFeedbackKind==="bug";
+    $("rescueFeedbackTitle").textContent=isBug?"🐞 回報上傳救援問題":"💡 上傳救援功能許願";
+    $("rescueFeedbackHelp").textContent=isBug
+      ?"請簡單說明發生什麼事、你原本想做什麼。"
+      :"說說你希望上傳救援還能幫你處理什麼問題。";
+    $("rescueFeedbackText").placeholder=isBug
+      ?"例如：我要壓到 500KB，但處理後網站還是不讓我上傳。"
+      :"例如：希望可以一次把多張照片改成某個網站要求的尺寸。";
+    $("rescueFeedbackText").value="";
+    $("rescueFeedbackContact").value="";
+    $("rescueFeedbackResult").classList.add("hidden");
+    $("rescueFeedbackSendBtn").disabled=false;
+    $("rescueFeedbackSendBtn").textContent=isBug?"送出回報":"送出許願";
+    $("rescueFeedbackBackdrop").classList.remove("hidden");
+    setTimeout(()=>$("rescueFeedbackText").focus(),30);
+  }
+
+  function closeRescueFeedback(){
+    $("rescueFeedbackBackdrop").classList.add("hidden");
+  }
+
+  async function sendRescueFeedback(){
+    const body=($("rescueFeedbackText").value||"").trim();
+    if(!body){
+      $("rescueFeedbackResult").classList.remove("hidden");
+      $("rescueFeedbackResult").textContent="⚠️ 請先填寫回報或許願內容。";
+      $("rescueFeedbackText").focus();
+      return;
+    }
+    const isBug=rescueFeedbackKind==="bug";
+    const button=$("rescueFeedbackSendBtn");
+    button.disabled=true;
+    button.textContent="正在送出…";
+    const params=new URLSearchParams();
+    params.set(RESCUE_FEEDBACK_FORM_FIELDS.kind,isBug?"問題回報":"功能許願");
+    params.set(RESCUE_FEEDBACK_FORM_FIELDS.body,body);
+    params.set(RESCUE_FEEDBACK_FORM_FIELDS.tool,"🚑 上傳救援");
+    params.set(RESCUE_FEEDBACK_FORM_FIELDS.environment,rescueFeedbackBrowserSummary());
+    params.set(RESCUE_FEEDBACK_FORM_FIELDS.contact,($("rescueFeedbackContact").value||"").trim());
+    $("rescueFeedbackResult").classList.remove("hidden");
+    $("rescueFeedbackResult").textContent="正在送出，請稍候…";
+    try{
+      await fetch(RESCUE_FEEDBACK_FORM_ENDPOINT,{
+        method:"POST",
+        mode:"no-cors",
+        headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+        body:params.toString()
+      });
+      $("rescueFeedbackResult").textContent=isBug?"✅ 問題回報已送出。":"✅ 功能許願已送出。";
+      $("rescueFeedbackText").value="";
+      $("rescueFeedbackContact").value="";
+      button.textContent="✅ 已送出";
+      setTimeout(closeRescueFeedback,900);
+    }catch(_){
+      $("rescueFeedbackResult").textContent="⚠️ 目前無法送出，內容已保留，請稍後再試。";
+      button.disabled=false;
+      button.textContent=isBug?"送出回報":"送出許願";
+    }
+  }
+
+  const state={items:[],results:[],lab:[],lastSpec:null};
+  const privacyState={itemId:null,img:null,regions:[],drag:null,selectedIndex:null,displayScale:1,sourceW:0,sourceH:0,panX:0,panY:0,panDrag:null};
+  let idSeq=1;
+
+  const MODES={
+    recommended:{label:"🌿 畫質優先",minQ:.55,minLong:1024,step:.88},
+    force:{label:"🎯 一定達標",minQ:.28,minLong:640,step:.84},
+    extreme:{label:"🧪 極限",minQ:.10,minLong:240,step:.78}
+  };
+
+  const fmtName=t=>t==="image/jpeg"?"JPG":t==="image/png"?"PNG":t==="image/webp"?"WEBP":(t||"未知");
+  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
+  function bytes(n){if(!Number.isFinite(n))return "—";if(n<1024)return `${n} B`;if(n<1048576)return `${(n/1024).toFixed(n<10240?1:0)} KB`;return `${(n/1048576).toFixed(2)} MB`}
+  function reducePct(a,b){return a?`${Math.max(0,(1-b/a)*100).toFixed(1)}%`:"—"}
+  function exactSizeBytes(value,unit){
+    const n=Math.max(0,parseFloat(value)||0);
+    return unit==="kb"?Math.round(n*1024):Math.round(n*1048576);
+  }
+  function targetBytes(){
+    const v=$("targetMode").value;
+    if(v==="off")return 0;
+    if(v==="custom")return exactSizeBytes($("customSize").value,$("customUnit").value);
+    if(v.endsWith("k"))return parseInt(v,10)*1024;
+    if(v.endsWith("m"))return parseInt(v,10)*1048576;
+    return 0;
+  }
+  function safeType(file){return ["image/jpeg","image/png","image/webp"].includes(file?.type)}
+  function extFor(type){return type==="image/png"?"png":type==="image/webp"?"webp":"jpg"}
+  function currentCropRatio(){
+    const v=$("cropRatio").value;return v==="keep"?0:(v==="custom"?Math.max(.01,parseFloat($("customRatio").value)||1):parseFloat(v));
+  }
+  function outputTypeFor(file){
+    const v=$("outputFormat").value;
+    if(v!=="keep")return v;
+    return safeType(file)?file.type:"image/jpeg";
+  }
+  function updateProgress(p){$("progress").classList.add("show");$("progress").firstElementChild.style.width=`${Math.max(0,Math.min(100,p))}%`}
+  function hideProgress(){setTimeout(()=>$("progress").classList.remove("show"),400)}
+  function setStatus(msg,kind=""){$("status").textContent=msg;$("status").className=`status ${kind}`}
+
+  async function decode(file){
+    if("createImageBitmap" in window){
+      try{return await createImageBitmap(file,{imageOrientation:"from-image"})}catch(_){
+        try{return await createImageBitmap(file)}catch(e){}
+      }
+    }
+    return await new Promise((resolve,reject)=>{
+      const u=URL.createObjectURL(file),img=new Image();
+      img.onload=()=>{URL.revokeObjectURL(u);resolve(img)};img.onerror=e=>{URL.revokeObjectURL(u);reject(e)};img.src=u;
+    });
+  }
+  async function hasAlpha(img,type){
+    if(type==="image/jpeg")return false;
+    try{
+      const c=document.createElement("canvas"),s=64;
+      c.width=s;c.height=s;const x=c.getContext("2d",{willReadFrequently:true});
+      x.clearRect(0,0,s,s);x.drawImage(img,0,0,s,s);
+      const d=x.getImageData(0,0,s,s).data;
+      for(let i=3;i<d.length;i+=4)if(d[i]<250)return true;
+    }catch(_){}
+    return type==="image/png";
+  }
+  async function probe(file){
+    const img=await decode(file);
+    const w=img.width||img.naturalWidth,h=img.height||img.naturalHeight;
+    const alpha=await hasAlpha(img,file.type);
+    if(img.close)try{img.close()}catch(_){}
+    return {w,h,alpha};
+  }
+
+  function renderFiles(){
+    const wrap=$("fileList");wrap.innerHTML="";
+    if(!state.items.length){wrap.innerHTML='<div class="small">尚未選擇圖片。</div>';return}
+    for(const it of state.items){
+      const row=document.createElement("div");row.className="file-row";
+      row.innerHTML=`<img class="thumb" src="${it.url}" alt=""><div><div class="file-name">${esc(it.file.name)}</div><div class="file-meta">${bytes(it.file.size)}｜${it.meta?`${it.meta.w}×${it.meta.h}`:"讀取中…"}｜${fmtName(it.file.type)}${it.meta?.alpha?"｜可能含透明":""}${it.error?"｜❌ 無法解碼":""}</div></div><button class="iconbtn" data-id="${it.id}" title="移除">✕</button>`;
+      wrap.appendChild(row);
+    }
+    wrap.querySelectorAll("button[data-id]").forEach(b=>b.onclick=()=>removeItem(Number(b.dataset.id)));
+    refreshPrivacySelect();
+  }
+  async function addFiles(files){
+    const arr=[...files].slice(0,30);
+    for(const file of arr){
+      const it={id:idSeq++,file,url:URL.createObjectURL(file),meta:null,error:null};
+      state.items.push(it);renderFiles();
+      try{it.meta=await probe(file)}catch(e){it.error="decode_failed"}
+      renderFiles();
+    }
+  }
+  function removeItem(id){
+    const i=state.items.findIndex(x=>x.id===id);if(i<0)return;
+    URL.revokeObjectURL(state.items[i].url);state.items.splice(i,1);renderFiles();
+  }
+  function clearItems(){
+    for(const i of state.items)URL.revokeObjectURL(i.url);
+    state.items=[];renderFiles();clearResults();clearLab();
+    privacyState.itemId=null;privacyState.img=null;privacyState.regions=[];privacyState.drag=null;privacyState.selectedIndex=null;
+    resetPrivacyPan();refreshPrivacyDropHint();drawPrivacyCanvas();renderPrivacyList();
+  }
+
+  function sourceRect(w,h,ratio,anchor){
+    if(!ratio)return {sx:0,sy:0,sw:w,sh:h};
+    const cur=w/h;let sw=w,sh=h;
+    if(cur>ratio)sw=h*ratio;else sh=w/ratio;
+    let sx=(w-sw)/2,sy=(h-sh)/2;
+    if(anchor==="left")sx=0;if(anchor==="right")sx=w-sw;if(anchor==="top")sy=0;if(anchor==="bottom")sy=h-sh;
+    return {sx,sy,sw,sh};
+  }
+  function baseDims(rect,rot){return (rot===90||rot===270)?{w:rect.sh,h:rect.sw}:{w:rect.sw,h:rect.sh}}
+  function manualDims(bw,bh,allowUpscale){
+    const mode=$("resizeMode").value,wv=Math.max(1,parseInt($("resizeW").value)||1),hv=Math.max(1,parseInt($("resizeH").value)||1);
+    let w=bw,h=bh;
+    if(mode==="long"){const s=wv/Math.max(bw,bh);if(s<1||allowUpscale){w=bw*s;h=bh*s}}
+    else if(mode==="box"){const s=Math.min(wv/bw,hv/bh);if(s<1||allowUpscale){w=bw*s;h=bh*s}}
+    else if(mode==="width"){const s=wv/bw;if(s<1||allowUpscale){w=wv;h=bh*s}}
+    else if(mode==="height"){const s=hv/bh;if(s<1||allowUpscale){h=hv;w=bw*s}}
+    else if(mode==="exact"){w=wv;h=hv}
+    else if(mode==="percent"){const s=Math.max(.01,hv/100);if(s<=1||allowUpscale){w=bw*s;h=bh*s}}
+    return {w:Math.max(1,Math.round(w)),h:Math.max(1,Math.round(h))};
+  }
+  function specDims(bw,bh,spec){
+    let s=1;
+    if(spec.maxW>0)s=Math.min(s,spec.maxW/bw);
+    if(spec.maxH>0)s=Math.min(s,spec.maxH/bh);
+    let needUp=1;
+    if(spec.minW>0)needUp=Math.max(needUp,spec.minW/bw);
+    if(spec.minH>0)needUp=Math.max(needUp,spec.minH/bh);
+    if(needUp>1&&spec.allowUpscale)s=Math.max(s,needUp);
+    let w=Math.round(bw*s),h=Math.round(bh*s);
+    return {w:Math.max(1,w),h:Math.max(1,h)};
+  }
+
+  function drawCanvas(img,rect,rot,w,h,bg,forceBg){
+    const c=document.createElement("canvas");c.width=w;c.height=h;
+    const x=c.getContext("2d",{alpha:!forceBg});x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";
+    if(forceBg){x.fillStyle=bg||"#fff";x.fillRect(0,0,w,h)}
+    x.save();
+    if(rot===90){x.translate(w,0);x.rotate(Math.PI/2);x.drawImage(img,rect.sx,rect.sy,rect.sw,rect.sh,0,0,h,w)}
+    else if(rot===180){x.translate(w,h);x.rotate(Math.PI);x.drawImage(img,rect.sx,rect.sy,rect.sw,rect.sh,0,0,w,h)}
+    else if(rot===270){x.translate(0,h);x.rotate(-Math.PI/2);x.drawImage(img,rect.sx,rect.sy,rect.sw,rect.sh,0,0,h,w)}
+    else x.drawImage(img,rect.sx,rect.sy,rect.sw,rect.sh,0,0,w,h);
+    x.restore();return c;
+  }
+  function blobFromCanvas(c,type,q){
+    return new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error("encode_failed")),type,q));
+  }
+  async function encode(img,rect,rot,w,h,type,q,bg){
+    const forceBg=type==="image/jpeg";
+    const c=drawCanvas(img,rect,rot,w,h,bg,forceBg);
+    const b=await blobFromCanvas(c,type,q);
+    return b;
+  }
+
+  function scales(w,h,mode){
+    const cfg=MODES[mode],long=Math.max(w,h),minS=Math.min(1,cfg.minLong/long),a=[1];let s=1;
+    while(s*cfg.step>minS+.0005&&a.length<30){s*=cfg.step;a.push(s)}
+    if(a[a.length-1]>minS+.001)a.push(minS);
+    return a;
+  }
+  async function bestQuality(img,rect,rot,w,h,type,target,mode,bg){
+    const cfg=MODES[mode],high=.96,low=cfg.minQ;
+    let bh=await encode(img,rect,rot,w,h,type,high,bg);
+    if(bh.size<=target)return {blob:bh,q:high,w,h,hit:true};
+    let bl=await encode(img,rect,rot,w,h,type,low,bg);
+    if(bl.size>target)return {blob:bl,q:low,w,h,hit:false};
+    let best={blob:bl,q:low,w,h,hit:true},lo=low,hi=high;
+    for(let i=0;i<8;i++){
+      const q=(lo+hi)/2,b=await encode(img,rect,rot,w,h,type,q,bg);
+      if(b.size<=target){best={blob:b,q,w,h,hit:true};lo=q}else hi=q;
+    }
+    return best;
+  }
+  async function compressTarget(img,rect,rot,w,h,type,target,mode,bg){
+    if(type==="image/png"){
+      let last=null;const ss=scales(w,h,mode);
+      for(const s of ss){
+        const ww=Math.max(1,Math.round(w*s)),hh=Math.max(1,Math.round(h*s));
+        const b=await encode(img,rect,rot,ww,hh,type,1,bg);last={blob:b,q:null,w:ww,h:hh,hit:b.size<=target};
+        if(last.hit)return last;
+      }
+      return last;
+    }
+    let last=null;for(const s of scales(w,h,mode)){
+      const ww=Math.max(1,Math.round(w*s)),hh=Math.max(1,Math.round(h*s));
+      last=await bestQuality(img,rect,rot,ww,hh,type,target,mode,bg);
+      if(last.hit)return last;
+    }return last;
+  }
+
+  function settings(){
+    return {
+      target:targetBytes(),
+      mode:$("compressMode").value,
+      resizeMode:$("resizeMode").value,
+      ratio:currentCropRatio(),
+      anchor:$("cropAnchor").value,
+      rotation:parseInt($("rotation").value)||0,
+      allowUpscale:$("allowUpscale").checked,
+      outFormat:$("outputFormat").value,
+      baseQ:parseFloat($("baseQuality").value)||.94,
+      bg:$("bgColor").value||"#ffffff",
+      stripMeta:$("stripMeta").checked,
+      jpegFallback:$("allowJpegFallback").checked
+    }
+  }
+  function specSettings(){
+    return {
+      maxBytes:exactSizeBytes($("specMaxSize").value,$("specMaxUnit").value),
+      minW:Math.max(0,parseInt($("specMinW").value)||0),minH:Math.max(0,parseInt($("specMinH").value)||0),
+      maxW:Math.max(0,parseInt($("specMaxW").value)||0),maxH:Math.max(0,parseInt($("specMaxH").value)||0),
+      ratio:parseFloat($("specRatio").value)||0,
+      jpg:$("allowSpecJpg").checked,png:$("allowSpecPng").checked,webp:$("allowSpecWebp").checked,
+      allowUpscale:$("specAllowUpscale").checked,allowLoseAlpha:$("specAllowLoseAlpha").checked
+    }
+  }
+  function allowedSpecTypes(s){const a=[];if(s.jpg)a.push("image/jpeg");if(s.png)a.push("image/png");if(s.webp)a.push("image/webp");return a}
+
+  function noTransform(file,opt,meta){
+    const sameFmt=opt.outFormat==="keep"||opt.outFormat===file.type;
+    const targetAlreadyOk=!opt.target||file.size<=opt.target;
+    // Iron rule: if the only request is a max file size and the original
+    // already fits, preserve the exact original bytes.
+    return targetAlreadyOk&&opt.resizeMode==="keep"&&!opt.ratio&&!opt.rotation&&sameFmt&&!opt.stripMeta;
+  }
+  async function processOne(it,opt={},spec=null){
+    if(it.error||!it.meta)throw new Error("decode_failed");
+    const file=it.file,img=await decode(file),ow=it.meta.w,oh=it.meta.h;
+    const ratio=spec?.ratio||opt.ratio||0,anchor=opt.anchor||"center",rot=opt.rotation||0;
+    const rect=sourceRect(ow,oh,ratio,anchor),bd=baseDims(rect,rot);
+    let dims=spec?specDims(bd.w,bd.h,spec):manualDims(bd.w,bd.h,opt.allowUpscale);
+    let type;
+    if(spec){
+      const allowed=allowedSpecTypes(spec);
+      if(allowed.includes(file.type))type=file.type;
+      else type=allowed[0]||file.type||"image/jpeg";
+    }else type=opt.outFormat==="keep"?(safeType(file)?file.type:"image/jpeg"):opt.outFormat;
+    const target=spec?.maxBytes||opt.target||0;
+    const bg=opt.bg||"#ffffff";
+
+    const specTransform=!!spec&&(ratio||dims.w!==bd.w||dims.h!==bd.h||type!==file.type||target&&file.size>target||opt.stripMeta);
+    if(!spec&&noTransform(file,opt,it.meta)){if(img.close)try{img.close()}catch(_){}
+      return {blob:file,name:file.name,w:ow,h:oh,type:file.type,q:null,preserved:true,notes:["原檔不需變更"]};
+    }
+    if(spec&&!specTransform&&inspectMeta(it,spec).ok){if(img.close)try{img.close()}catch(_){}
+      return {blob:file,name:file.name,w:ow,h:oh,type:file.type,q:null,preserved:true,notes:["原檔已符合規格"]};
+    }
+
+    let r;
+    if(target){
+      r=await compressTarget(img,rect,rot,dims.w,dims.h,type,target,opt.mode||"recommended",bg);
+      if(r.blob.size>target&&type==="image/png"&&(spec?spec.allowLoseAlpha:opt.jpegFallback)){
+        const allowJ=spec?spec.jpg:true;
+        if(allowJ){type="image/jpeg";r=await compressTarget(img,rect,rot,dims.w,dims.h,type,target,opt.mode||"recommended",bg);r.fallbackJpeg=true}
+      }
+    }else{
+      const q=type==="image/png"?1:(opt.baseQ||.94),b=await encode(img,rect,rot,dims.w,dims.h,type,q,bg);
+      r={blob:b,q:type==="image/png"?null:q,w:dims.w,h:dims.h,hit:true};
+    }
+    if(img.close)try{img.close()}catch(_){}
+    const base=file.name.replace(/\.[^.]+$/,""),name=`${base}_PrintReady.${extFor(type)}`;
+    const notes=[];
+    if(type!==file.type)notes.push(`${fmtName(file.type)} → ${fmtName(type)}`);
+    if(r.w!==ow||r.h!==oh)notes.push(`${ow}×${oh} → ${r.w}×${r.h}`);
+    if(r.q!=null)notes.push(`品質約 ${Math.round(r.q*100)}%`);
+    if(r.fallbackJpeg)notes.push("PNG 為了達標轉 JPG");
+    if(opt.stripMeta)notes.push("重新輸出已移除原始拍攝資訊");
+    if(target&&r.blob.size>target)notes.push(`未能壓進 ${bytes(target)}`);
+    return {blob:r.blob,name,w:r.w,h:r.h,type,q:r.q,preserved:false,notes,target,hit:!target||r.blob.size<=target};
+  }
+
+
+
+  function refreshPrivacyDropHint(){
+    const hint=$("privacyDropHint");
+    if(!hint)return;
+    hint.classList.toggle("hidden",!!privacyState.img);
+  }
+
+  async function addPrivacyFile(file){
+    if(!file)return;
+    if(!file.type.startsWith("image/") && !/\.(jpe?g|png|webp)$/i.test(file.name||"")){
+      setStatus("這裡只能拖圖片檔。","warn");
+      return;
+    }
+
+    const it={id:idSeq++,file,url:URL.createObjectURL(file),meta:null,error:null};
+    state.items.push(it);
+    renderFiles();
+
+    try{
+      it.meta=await probe(file);
+      renderFiles();
+      $("privacyImageSelect").value=String(it.id);
+      await privacyLoad();
+      showTab("privacy");
+    }catch(e){
+      it.error="decode_failed";
+      renderFiles();
+      setStatus("這張圖片瀏覽器無法安全讀取。","err");
+    }
+  }
+
+  function refreshPrivacySelect(){
+    const sel=$("privacyImageSelect"); if(!sel)return;
+    const cur=sel.value; sel.innerHTML="";
+    state.items.forEach(it=>{
+      const o=document.createElement("option");o.value=it.id;o.textContent=it.file.name;sel.appendChild(o);
+    });
+    if(cur && [...sel.options].some(o=>o.value===cur)) sel.value=cur;
+  }
+
+  async function privacyLoad(){
+    const id=Number($("privacyImageSelect").value),it=state.items.find(x=>x.id===id);
+    if(!it||!it.meta){setStatus("先選一張可讀圖片。","warn");return}
+    try{
+      const img=await decode(it.file);
+      privacyState.itemId=id;privacyState.img=img;privacyState.regions=[];privacyState.drag=null;privacyState.selectedIndex=null;privacyState.panX=0;privacyState.panY=0;privacyState.panDrag=null;
+      privacyState.sourceW=it.meta.w;privacyState.sourceH=it.meta.h;
+      drawPrivacyCanvas();refreshPrivacyDropHint();renderPrivacyList();setStatus("已載入遮蔽編輯器。","ok");
+    }catch(e){setStatus("這張圖片無法載入遮蔽編輯器。","err")}
+  }
+
+  function privacyCanvasFit(){
+    const c=$("privacyCanvas"),wrap=c.parentElement;
+    const maxW=Math.max(280,Math.min(900,wrap.clientWidth-16));
+    const s=Math.min(1,maxW/privacyState.sourceW);
+    c.width=Math.max(1,Math.round(privacyState.sourceW*s));
+    c.height=Math.max(1,Math.round(privacyState.sourceH*s));
+    privacyState.displayScale=s;
+    applyPrivacyPan();
+  }
+
+
+  function applyPrivacyPan(){
+    const c=$("privacyCanvas"); if(!c)return;
+    c.style.transform=`translate(${privacyState.panX}px, ${privacyState.panY}px)`;
+  }
+
+  function resetPrivacyPan(){
+    privacyState.panX=0;privacyState.panY=0;privacyState.panDrag=null;
+    const wrap=$("privacyCanvas")?.parentElement;
+    if(wrap)wrap.classList.remove("panning");
+    applyPrivacyPan();
+  }
+
+  function privacyPanStart(e){
+    const wrap=$("privacyCanvas")?.parentElement;
+    if(!wrap || e.target!==wrap || !privacyState.img)return;
+    e.preventDefault();
+    privacyState.panDrag={
+      pointerId:e.pointerId,
+      startClientX:e.clientX,
+      startClientY:e.clientY,
+      startPanX:privacyState.panX,
+      startPanY:privacyState.panY
+    };
+    wrap.classList.add("panning");
+    try{wrap.setPointerCapture(e.pointerId)}catch(_){}
+  }
+
+  function privacyPanMove(e){
+    const d=privacyState.panDrag;if(!d)return;
+    e.preventDefault();
+    privacyState.panX=d.startPanX+(e.clientX-d.startClientX);
+    privacyState.panY=d.startPanY+(e.clientY-d.startClientY);
+    applyPrivacyPan();
+  }
+
+  function privacyPanEnd(e){
+    const d=privacyState.panDrag;if(!d)return;
+    const wrap=$("privacyCanvas")?.parentElement;
+    privacyState.panDrag=null;
+    if(wrap){
+      wrap.classList.remove("panning");
+      try{wrap.releasePointerCapture(e.pointerId)}catch(_){}
+    }
+  }
+
+  function drawPrivacyCanvas(){
+    const c=$("privacyCanvas");
+    if(!privacyState.img){
+      const x=c.getContext("2d");x.clearRect(0,0,c.width,c.height);
+      refreshPrivacyDropHint();
+      return;
+    }
+    privacyCanvasFit();
+    const x=c.getContext("2d"); x.clearRect(0,0,c.width,c.height); x.drawImage(privacyState.img,0,0,c.width,c.height);
+    for(const r of privacyState.regions) drawPrivacyEffect(x,r,privacyState.displayScale,true);
+    if(privacyState.selectedIndex!=null && privacyState.regions[privacyState.selectedIndex]){
+      const r=privacyState.regions[privacyState.selectedIndex];
+      x.save();x.strokeStyle="#166534";x.lineWidth=3;x.setLineDash([8,5]);
+      x.strokeRect(r.x*privacyState.displayScale,r.y*privacyState.displayScale,r.w*privacyState.displayScale,r.h*privacyState.displayScale);
+      x.restore();
+    }
+    if(privacyState.drag && privacyState.drag.action==="new"){
+      const r=privacyState.drag;x.save();x.strokeStyle="#d22";x.lineWidth=2;x.setLineDash([6,4]);
+      x.strokeRect(r.x*privacyState.displayScale,r.y*privacyState.displayScale,r.w*privacyState.displayScale,r.h*privacyState.displayScale);x.restore();
+    }
+  }
+
+  function drawPrivacyEffect(ctx,r,scale,preview){
+    const x=r.x*scale,y=r.y*scale,w=r.w*scale,h=r.h*scale;
+    if(w<1||h<1)return;
+    if(r.mode==="black"){ctx.save();ctx.fillStyle="#000";ctx.fillRect(x,y,w,h);ctx.restore();return}
+    if(r.mode==="white"){ctx.save();ctx.fillStyle="#fff";ctx.fillRect(x,y,w,h);ctx.restore();return}
+    if(r.mode==="mosaic"){
+      const sx=Math.max(1,Math.round(r.x)),sy=Math.max(1,Math.round(r.y)),sw=Math.max(1,Math.round(r.w)),sh=Math.max(1,Math.round(r.h));
+      const temp=document.createElement("canvas"),small=document.createElement("canvas");
+      const block=12;
+      small.width=Math.max(1,Math.round(w/block));small.height=Math.max(1,Math.round(h/block));
+      const sctx=small.getContext("2d");sctx.imageSmoothingEnabled=false;
+      if(preview) sctx.drawImage(privacyState.img,sx,sy,sw,sh,0,0,small.width,small.height);
+      else sctx.drawImage(ctx.canvas,sx,sy,sw,sh,0,0,small.width,small.height);
+      ctx.save();ctx.imageSmoothingEnabled=false;ctx.drawImage(small,0,0,small.width,small.height,x,y,w,h);ctx.restore();return;
+    }
+    if(r.mode==="blur"){
+      const off=document.createElement("canvas");off.width=Math.max(1,Math.round(w));off.height=Math.max(1,Math.round(h));
+      const o=off.getContext("2d");
+      o.filter=`blur(${Math.max(6,Math.round(12*scale))}px)`;
+      if(preview) o.drawImage(privacyState.img,r.x,r.y,r.w,r.h,0,0,off.width,off.height);
+      else o.drawImage(ctx.canvas,r.x,r.y,r.w,r.h,0,0,off.width,off.height);
+      ctx.drawImage(off,x,y,w,h);
+    }
+  }
+
+  function canvasPoint(e){
+    const c=$("privacyCanvas"),rect=c.getBoundingClientRect(),touch=e.touches?.[0]||e.changedTouches?.[0];
+    const cx=(touch?touch.clientX:e.clientX)-rect.left,cy=(touch?touch.clientY:e.clientY)-rect.top;
+    return {x:Math.max(0,Math.min(privacyState.sourceW,cx/privacyState.displayScale)),y:Math.max(0,Math.min(privacyState.sourceH,cy/privacyState.displayScale))};
+  }
+
+  function privacyHitTest(p){
+    for(let i=privacyState.regions.length-1;i>=0;i--){
+      const r=privacyState.regions[i];
+      if(p.x>=r.x && p.x<=r.x+r.w && p.y>=r.y && p.y<=r.y+r.h) return i;
+    }
+    return -1;
+  }
+
+  function privacyStart(e){
+    if(!privacyState.img)return;
+    e.preventDefault();
+    const p=canvasPoint(e),hit=privacyHitTest(p);
+    if(hit>=0){
+      const r=privacyState.regions[hit];
+      privacyState.selectedIndex=hit;
+      privacyState.drag={
+        action:"move",index:hit,
+        startX:p.x,startY:p.y,
+        origX:r.x,origY:r.y,w:r.w,h:r.h
+      };
+      $("privacyCanvas").style.cursor="grabbing";
+    }else{
+      privacyState.selectedIndex=null;
+      privacyState.drag={
+        action:"new",
+        x:p.x,y:p.y,w:0,h:0,mode:$("privacyMode").value,
+        startX:p.x,startY:p.y
+      };
+      $("privacyCanvas").style.cursor="crosshair";
+    }
+    drawPrivacyCanvas();
+  }
+
+  function privacyMove(e){
+    if(!privacyState.img)return;
+    const p=canvasPoint(e);
+    if(!privacyState.drag){
+      const hit=privacyHitTest(p);
+      $("privacyCanvas").style.cursor=hit>=0?"grab":"crosshair";
+      return;
+    }
+    e.preventDefault();
+    const d=privacyState.drag;
+    if(d.action==="move"){
+      const r=privacyState.regions[d.index];
+      if(!r)return;
+      let nx=d.origX+(p.x-d.startX),ny=d.origY+(p.y-d.startY);
+      nx=Math.max(0,Math.min(privacyState.sourceW-r.w,nx));
+      ny=Math.max(0,Math.min(privacyState.sourceH-r.h,ny));
+      r.x=nx;r.y=ny;
+    }else{
+      d.x=Math.min(d.startX,p.x);d.y=Math.min(d.startY,p.y);
+      d.w=Math.abs(p.x-d.startX);d.h=Math.abs(p.y-d.startY);
+    }
+    drawPrivacyCanvas();
+  }
+
+  function privacyEnd(e){
+    if(!privacyState.drag)return;
+    e.preventDefault();
+    privacyMove(e);
+    const d=privacyState.drag;
+    if(d.action==="new" && d.w>6 && d.h>6){
+      privacyState.regions.push({x:d.x,y:d.y,w:d.w,h:d.h,mode:d.mode});
+      privacyState.selectedIndex=privacyState.regions.length-1;
+    }
+    privacyState.drag=null;
+    $("privacyCanvas").style.cursor="crosshair";
+    drawPrivacyCanvas();renderPrivacyList();
+  }
+
+  function renderPrivacyList(){
+    const wrap=$("privacyList");if(!wrap)return;wrap.innerHTML="";
+    privacyState.regions.forEach((r,i)=>{
+      const d=document.createElement("div");d.className="privacy-item";
+      d.dataset.region=i;
+      d.innerHTML=`<span>${i+1}. ${r.mode==="black"?"黑條":r.mode==="white"?"白色":r.mode==="mosaic"?"馬賽克":"模糊"}｜${Math.round(r.w)}×${Math.round(r.h)}</span><button data-i="${i}">✕</button>`;wrap.appendChild(d);
+    });
+    wrap.querySelectorAll(".privacy-item").forEach(row=>row.onclick=e=>{
+      if(e.target.closest("button"))return;
+      privacyState.selectedIndex=Number(row.dataset.region);drawPrivacyCanvas();
+    });
+    wrap.querySelectorAll("button[data-i]").forEach(b=>b.onclick=e=>{
+      e.stopPropagation();
+      const i=Number(b.dataset.i);privacyState.regions.splice(i,1);
+      if(privacyState.selectedIndex===i)privacyState.selectedIndex=null;
+      else if(privacyState.selectedIndex>i)privacyState.selectedIndex--;
+      drawPrivacyCanvas();renderPrivacyList();
+    });
+  }
+
+  async function privacyDownload(){
+    if(!privacyState.img||!privacyState.itemId){setStatus("先載入一張圖片到遮蔽編輯器。","warn");return}
+    if(!privacyState.regions.length){setStatus("還沒有框選任何遮蔽區域。","warn");return}
+    const it=state.items.find(x=>x.id===privacyState.itemId); if(!it)return;
+    const c=document.createElement("canvas");c.width=privacyState.sourceW;c.height=privacyState.sourceH;
+    const x=c.getContext("2d");x.drawImage(privacyState.img,0,0,c.width,c.height);
+    for(const r of privacyState.regions) drawPrivacyEffect(x,r,1,false);
+    const type=it.file.type==="image/png"?"image/png":"image/jpeg";
+    const blob=await blobFromCanvas(c,type,type==="image/png"?1:.94);
+    const base=it.file.name.replace(/\.[^.]+$/,""),ext=type==="image/png"?"png":"jpg";
+    downloadBlob(blob,`${base}_隱私遮蔽_PrintReady.${ext}`);setStatus("已輸出遮蔽後圖片。","ok")
+  }
+
+
+  function clearResults(){
+    for(const r of state.results)if(r.url)URL.revokeObjectURL(r.url);
+    state.results=[];$("resultList").innerHTML="";$("resultsCard").classList.add("hidden");
+  }
+  function renderResults(){
+    const wrap=$("resultList");wrap.innerHTML="";
+    for(let i=0;i<state.results.length;i++){
+      const r=state.results[i],it=r.item;
+      const row=document.createElement("div");row.className="result-row";row.id=`result-row-${i}`;
+      const kind=r.error?"err":r.result?.hit===false?"warn":"ok";
+      const tag=r.error?"處理失敗":r.result?.preserved?"原檔保留":r.result?.hit===false?"未達目標":"完成";
+      row.innerHTML=`<div class="result-top"><div><div class="result-name">${esc(it.file.name)}</div><div class="result-meta">${r.error?esc(r.error):`${bytes(it.file.size)} → ${bytes(r.result.blob.size)}｜${r.result.w}×${r.result.h}｜${fmtName(r.result.type)}｜縮小 ${reducePct(it.file.size,r.result.blob.size)}<br>${esc((r.result.notes||[]).join("；"))}`}</div></div><div><span class="pill ${kind}">${tag}</span></div></div>
+      ${!r.error?`<div class="preview-pair"><div class="preview"><b>原圖</b><img src="${it.url}"></div><div class="preview"><b>處理後</b><img src="${r.url}"></div></div><div class="actions"><button class="btn secondary dl-one" data-i="${i}">${r.result?.preserved?`下載原檔（${bytes(r.result.blob.size)}）`:`下載處理後檔案（${bytes(r.result.blob.size)}）`}</button></div>`:""}`;
+      wrap.appendChild(row);
+    }
+    wrap.querySelectorAll(".dl-one").forEach(b=>b.onclick=()=>downloadOne(Number(b.dataset.i)));
+    $("resultsCard").classList.remove("hidden");
+  }
+
+  function validateOutputAgainstSpec(result,spec){
+    if(!spec)return [];
+    const issues=[];
+    const allowed=allowedSpecTypes(spec);
+    if(allowed.length && !allowed.includes(result.type)){
+      issues.push(`格式 ${fmtName(result.type)} 不在允許清單`);
+    }
+    if(spec.maxBytes && result.blob.size>spec.maxBytes){
+      issues.push(`處理後仍有 ${bytes(result.blob.size)}，超過 ${bytes(spec.maxBytes)}`);
+    }
+    if(spec.minW && result.w<spec.minW) issues.push(`寬度 ${result.w}px，小於最低 ${spec.minW}px`);
+    if(spec.minH && result.h<spec.minH) issues.push(`高度 ${result.h}px，小於最低 ${spec.minH}px`);
+    if(spec.maxW && result.w>spec.maxW) issues.push(`寬度 ${result.w}px，超過最高 ${spec.maxW}px`);
+    if(spec.maxH && result.h>spec.maxH) issues.push(`高度 ${result.h}px，超過最高 ${spec.maxH}px`);
+    if(spec.ratio){
+      const rr=result.w/result.h;
+      if(Math.abs(rr-spec.ratio)/spec.ratio>.02) issues.push(`比例仍不符合指定比例`);
+    }
+    return issues;
+  }
+
+  function clearIssueSummary(){
+    const box=$("issueSummary");
+    if(!box)return;
+    box.className="issue-summary";
+    box.innerHTML="";
+  }
+
+  function showIssueSummary(problemRows,spec){
+    const box=$("issueSummary");
+    if(!box)return;
+    if(!problemRows.length){clearIssueSummary();return}
+    const lines=problemRows.map((r,i)=>{
+      const name=esc(r.item.file.name);
+      let reason="";
+      if(r.error) reason=esc(r.error);
+      else {
+        const reasons=r.result?.specIssues?.length ? r.result.specIssues : (r.result?.notes||[]).filter(n=>/未能|無法|超過|小於|不符/.test(n));
+        reason=esc(reasons.join("；")||"處理結果需要確認");
+        if(spec && r.item.meta?.alpha && r.result?.type==="image/png" && spec.maxBytes && r.result.blob.size>spec.maxBytes && !spec.allowLoseAlpha){
+          reason += `；這張有透明背景，目前禁止轉 JPG，所以無法再有效壓小。可勾「必要時允許透明圖轉 JPG」後再修一次`;
+        }
+      }
+      const idx=state.results.indexOf(r);
+      const canRetryJpeg=!!(
+        spec &&
+        r.item.meta?.alpha &&
+        r.result?.type==="image/png" &&
+        spec.maxBytes &&
+        r.result.blob.size>spec.maxBytes &&
+        !spec.allowLoseAlpha &&
+        spec.jpg
+      );
+      const fixBtn=canRetryJpeg
+        ? `<button class="issue-fix" data-fix-jpg="${idx}">允許轉 JPG，再幫我修一次</button>`
+        : "";
+      return `<li><b>${name}</b>：${reason}<button class="issue-jump" data-row="${idx}">查看結果</button>${fixBtn}</li>`;
+    }).join("");
+    box.innerHTML=`<b>⚠️ 有 ${problemRows.length} 張沒有完全符合：</b><ul>${lines}</ul>`;
+    box.className="issue-summary show";
+    box.querySelectorAll(".issue-jump").forEach(btn=>btn.onclick=()=>{
+      const row=$(`result-row-${btn.dataset.row}`);
+      if(row)row.scrollIntoView({behavior:"smooth",block:"center"});
+    });
+    box.querySelectorAll(".issue-fix").forEach(btn=>btn.onclick=()=>retryIssueAsJpeg(Number(btn.dataset.fixJpg),btn));
+  }
+
+  async function processAll(spec=null){
+    if(!state.items.length){setStatus("先選圖片。","warn");return}
+    clearResults();clearIssueSummary();
+    state.lastSpec=spec?{...spec}:null;
+    setStatus(spec?"正在依照上傳規格修正…":"正在處理圖片…");updateProgress(2);
+    const opt=settings();
+    for(let i=0;i<state.items.length;i++){
+      const item=state.items[i];
+      try{
+        const result=await processOne(item,opt,spec);
+        if(spec){
+          result.specIssues=validateOutputAgainstSpec(result,spec);
+          result.hit=(result.hit!==false)&&result.specIssues.length===0;
+          if(result.specIssues.length) result.notes=[...(result.notes||[]),`未符合：${result.specIssues.join("；")}`];
+        }
+        const url=URL.createObjectURL(result.blob);state.results.push({item,result,url});
+      }catch(e){
+        console.error(e);
+        state.results.push({item,error:"這張圖片無法安全解碼或處理。"});
+      }
+      updateProgress(5+(i+1)/state.items.length*90);
+    }
+    renderResults();
+    if(state.results.some(x=>!x.error))trackRescueUsage();
+    if(spec)renderSpecCheckAfterFix(spec);
+    updateProgress(100);hideProgress();
+    const problems=state.results.filter(x=>x.error||x.result?.hit===false||x.result?.specIssues?.length);
+    if(problems.length){
+      setStatus(`完成，但有 ${problems.length} 張沒有完全符合。原因已列在下面。`,"warn");
+      showIssueSummary(problems,spec);
+    }else{
+      setStatus(`完成 ${state.results.length} 張，全部符合，可以下載。`,"ok");
+      clearIssueSummary();
+    }
+  }
+
+
+  async function retryIssueAsJpeg(index,button){
+    const entry=state.results[index];
+    if(!entry||entry.error||!entry.item)return;
+    const baseSpec=state.lastSpec;
+    if(!baseSpec){setStatus("找不到上一組上傳規格，請重新按一次「幫我修到符合」。","warn");return}
+
+    const ok=window.confirm("這張圖片有透明背景。繼續後會轉成 JPG，透明區域會變成背景色（預設白色）。要只重跑這一張嗎？");
+    if(!ok)return;
+
+    button.disabled=true;
+    button.textContent="正在重跑…";
+    setStatus(`正在重跑 ${entry.item.file.name}…`);
+    updateProgress(15);
+
+    try{
+      const spec={...baseSpec,allowLoseAlpha:true,jpg:true};
+      state.lastSpec=spec;
+      $("specAllowLoseAlpha").checked=true;
+      $("allowSpecJpg").checked=true;
+
+      const opt=settings();
+      const result=await processOne(entry.item,opt,spec);
+      result.specIssues=validateOutputAgainstSpec(result,spec);
+      result.hit=(result.hit!==false)&&result.specIssues.length===0;
+      if(result.specIssues.length){
+        result.notes=[...(result.notes||[]),`未符合：${result.specIssues.join("；")}`];
+      }
+
+      if(entry.url)URL.revokeObjectURL(entry.url);
+      const url=URL.createObjectURL(result.blob);
+      state.results[index]={item:entry.item,result,url};
+
+      renderResults();
+      renderSpecCheckAfterFix(spec);
+      const problems=state.results.filter(x=>x.error||x.result?.hit===false||x.result?.specIssues?.length);
+
+      updateProgress(100);hideProgress();
+      if(problems.length){
+        setStatus(`這張已重新處理，但目前仍有 ${problems.length} 張沒有完全符合。`,"warn");
+        showIssueSummary(problems,spec);
+      }else{
+        setStatus("重新處理完成，全部檔案都符合目前規格。","ok");
+        clearIssueSummary();
+      }
+
+      const row=$(`result-row-${index}`);
+      if(row)row.scrollIntoView({behavior:"smooth",block:"center"});
+    }catch(e){
+      console.error(e);
+      setStatus("重跑這張時發生錯誤，請重新按一次「幫我修到符合」。","err");
+      button.disabled=false;
+      button.textContent="允許轉 JPG，再幫我修一次";
+    }
+  }
+
+  function inspectMeta(it,spec){
+    const checks=[];if(!it.meta)return {ok:false,checks:[["讀取","fail"]]};
+    const allowed=allowedSpecTypes(spec);
+    if(allowed.length)checks.push([allowed.includes(it.file.type)?`格式 ${fmtName(it.file.type)} OK`:`格式 ${fmtName(it.file.type)} 不符合`,allowed.includes(it.file.type)]);
+    if(spec.maxBytes)checks.push([it.file.size<=spec.maxBytes?`大小 ${bytes(it.file.size)} OK`:`大小 ${bytes(it.file.size)} > ${bytes(spec.maxBytes)}`,it.file.size<=spec.maxBytes]);
+    if(spec.minW)checks.push([`${it.meta.w}px ${it.meta.w>=spec.minW?"≥":"<"} 最小寬 ${spec.minW}px`,it.meta.w>=spec.minW]);
+    if(spec.minH)checks.push([`${it.meta.h}px ${it.meta.h>=spec.minH?"≥":"<"} 最小高 ${spec.minH}px`,it.meta.h>=spec.minH]);
+    if(spec.maxW)checks.push([`${it.meta.w}px ${it.meta.w<=spec.maxW?"≤":">"} 最大寬 ${spec.maxW}px`,it.meta.w<=spec.maxW]);
+    if(spec.maxH)checks.push([`${it.meta.h}px ${it.meta.h<=spec.maxH?"≤":">"} 最大高 ${spec.maxH}px`,it.meta.h<=spec.maxH]);
+    if(spec.ratio){const rr=it.meta.w/it.meta.h,ok=Math.abs(rr-spec.ratio)/spec.ratio<=.02;checks.push([ok?"比例符合":"比例不符",ok])}
+    return {ok:checks.every(x=>x[1]),checks};
+  }
+  function renderSpecCheck(){
+    const spec=specSettings(),wrap=$("checkList");wrap.innerHTML="";
+    if(!state.items.length){wrap.innerHTML='<div class="note warn">先選圖片。</div>';return}
+    if(!allowedSpecTypes(spec).length){wrap.innerHTML='<div class="note err">至少勾一種允許格式。</div>';return}
+    for(const it of state.items){
+      const r=inspectMeta(it,spec),d=document.createElement("div");d.className="check-row";
+      d.innerHTML=`<div class="check-head">${r.ok?"✅":"⚠️"} ${esc(it.file.name)}</div><div class="check-items">${r.checks.map(c=>`<span class="pill ${c[1]?"ok":"warn"}">${esc(c[0])}</span>`).join("")}</div>`;
+      wrap.appendChild(d);
+    }
+  }
+
+  function renderSpecCheckAfterFix(spec){
+    const wrap=$("checkList");wrap.innerHTML="";
+    if(!state.items.length){wrap.innerHTML='<div class="note warn">先選圖片。</div>';return}
+    if(!allowedSpecTypes(spec).length){wrap.innerHTML='<div class="note err">至少勾一種允許格式。</div>';return}
+
+    for(const it of state.items){
+      const original=inspectMeta(it,spec);
+      const entry=state.results.find(x=>x.item?.id===it.id);
+      const d=document.createElement("div");d.className="check-row";
+
+      if(!entry){
+        d.innerHTML=`<div class="check-head">${original.ok?"✅":"⚠️"} ${esc(it.file.name)}</div>
+          <div class="check-items">${original.checks.map(c=>`<span class="pill ${c[1]?"ok":"warn"}">${esc(c[0])}</span>`).join("")}</div>`;
+        wrap.appendChild(d);
+        continue;
+      }
+
+      if(entry.error){
+        const origProblems=original.checks.filter(c=>!c[1]).map(c=>c[0]);
+        d.innerHTML=`<div class="check-head">❌ ${esc(it.file.name)}</div>
+          <div class="check-items">
+            ${origProblems.length?`<span class="pill warn">原始：${esc(origProblems.join("；"))}</span>`:""}
+            <span class="pill err">處理失敗：${esc(entry.error)}</span>
+          </div>`;
+        wrap.appendChild(d);
+        continue;
+      }
+
+      const result=entry.result;
+      const finalIssues=result.specIssues?.length ? result.specIssues : validateOutputAgainstSpec(result,spec);
+      const success=(result.hit!==false)&&finalIssues.length===0;
+      const origProblems=original.checks.filter(c=>!c[1]).map(c=>c[0]);
+
+      if(original.ok && result.preserved && success){
+        d.innerHTML=`<div class="check-head">✅ ${esc(it.file.name)}</div>
+          <div class="check-items">
+            <span class="pill ok">原檔已符合｜${bytes(it.file.size)}｜${fmtName(it.file.type)}｜${it.meta.w}×${it.meta.h}</span>
+          </div>`;
+      }else if(success){
+        const originalTag=origProblems.length
+          ? `<span class="pill warn">原始：${esc(origProblems.join("；"))}</span>`
+          : `<span class="pill info">原始檔已符合，但依設定重新輸出</span>`;
+        d.innerHTML=`<div class="check-head">✅ ${esc(it.file.name)}</div>
+          <div class="check-items">
+            ${originalTag}
+            <span class="pill ok">✅ 已修正 → ${bytes(result.blob.size)}｜${fmtName(result.type)}｜${result.w}×${result.h}</span>
+          </div>`;
+      }else{
+        const originalTag=origProblems.length
+          ? `<span class="pill warn">原始：${esc(origProblems.join("；"))}</span>`
+          : `<span class="pill info">原始檔狀態已檢查</span>`;
+        d.innerHTML=`<div class="check-head">⚠️ ${esc(it.file.name)}</div>
+          <div class="check-items">
+            ${originalTag}
+            <span class="pill err">處理後仍未符合：${esc(finalIssues.join("；")||"需要確認")}</span>
+          </div>`;
+      }
+      wrap.appendChild(d);
+    }
+  }
+
+  function crcTable(){const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?0xedb88320^(c>>>1):c>>>1;t[n]=c>>>0}return t} const CRCT=crcTable();
+  function crc32(u8){let c=0xffffffff;for(const b of u8)c=CRCT[(c^b)&255]^(c>>>8);return (c^0xffffffff)>>>0}
+  function u16(v){return [v&255,(v>>>8)&255]}function u32(v){return [v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255]}
+  function dos(dt=new Date()){let d=((dt.getFullYear()-1980)<<9)|((dt.getMonth()+1)<<5)|dt.getDate(),t=(dt.getHours()<<11)|(dt.getMinutes()<<5)|(dt.getSeconds()>>1);return {d,t}}
+  async function buildZip(entries){
+    const enc=new TextEncoder(),locals=[],centrals=[];let off=0;const dd=dos();
+    for(const e of entries){
+      const name=enc.encode(e.name),data=new Uint8Array(await e.blob.arrayBuffer()),crc=crc32(data),size=data.length;
+      const local=new Uint8Array([80,75,3,4,20,0,0,8,0,0,...u16(dd.t),...u16(dd.d),...u32(crc),...u32(size),...u32(size),...u16(name.length),0,0,...name]);
+      locals.push(local,data);
+      const central=new Uint8Array([80,75,1,2,20,0,20,0,0,8,0,0,...u16(dd.t),...u16(dd.d),...u32(crc),...u32(size),...u32(size),...u16(name.length),0,0,0,0,0,0,0,0,0,0,0,0,...u32(off),...name]);
+      centrals.push(central);off+=local.length+data.length;
+    }
+    const csize=centrals.reduce((a,b)=>a+b.length,0),end=new Uint8Array([80,75,5,6,0,0,0,0,...u16(entries.length),...u16(entries.length),...u32(csize),...u32(off),0,0]);
+    return new Blob([...locals,...centrals,end],{type:"application/zip"});
+  }
+  function downloadBlob(blob,name){const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
+  function downloadOne(i){const r=state.results[i];if(r&&!r.error)downloadBlob(r.result.blob,r.result.name)}
+  async function downloadZip(){
+    const entries=state.results.filter(r=>!r.error).map(r=>({name:r.result.name,blob:r.result.blob}));
+    if(!entries.length)return;setStatus("正在打包 ZIP…");const z=await buildZip(entries);downloadBlob(z,"PrintReady_上傳救援.zip");setStatus("ZIP 已建立。","ok")
+  }
+
+  function clearLab(){for(const r of state.lab)if(r.url)URL.revokeObjectURL(r.url);state.lab=[];$("labBody").innerHTML="";$("labWrap").classList.add("hidden");$("labSummary").classList.add("hidden")}
+  async function labRun(){
+    clearLab();const it=state.items[0];if(!it||!it.meta){setStatus("先選一張可讀圖片。","warn");return}
+    const opt=settings();opt.resizeMode="keep";opt.ratio=0;opt.rotation=0;opt.outFormat="keep";opt.stripMeta=false;
+    const targets=[["2 MB",2*1048576],["1 MB",1048576],["500 KB",500*1024],["300 KB",300*1024],["200 KB",200*1024],["100 KB",100*1024]];
+    $("labWrap").classList.remove("hidden");setStatus("正在跑極限表…");updateProgress(2);
+    for(let i=0;i<targets.length;i++){
+      const [label,target]=targets[i];let result=null,used="original";
+      if(it.file.size<=target){result={blob:it.file,name:it.file.name,w:it.meta.w,h:it.meta.h,type:it.file.type,q:null,preserved:true,hit:true,notes:["原檔保留"]}}
+      else{
+        for(const mode of ["recommended","force","extreme"]){opt.target=target;opt.mode=mode;result=await processOne(it,opt,null);used=mode;if(result.blob.size<=target)break}
+      }
+      const url=URL.createObjectURL(result.blob),row={...result,url,label,target,used};state.lab.push(row);
+      const tr=document.createElement("tr"),ok=result.blob.size<=target;
+      tr.innerHTML=`<td><b>${label}</b></td><td>${bytes(result.blob.size)}</td><td>${result.preserved?"✅ 原檔保留":MODES[used].label}</td><td>${result.w}×${result.h}</td><td>${result.q==null?(result.preserved?"原檔":"PNG"):Math.round(result.q*100)+"%"}</td><td>${reducePct(it.file.size,result.blob.size)}</td><td>${ok?"✅":"⚠️"}</td><td><button class="preset lab-dl" data-i="${state.lab.length-1}">下載</button></td>`;
+      $("labBody").appendChild(tr);updateProgress(5+(i+1)/targets.length*90);
+    }
+    $("labBody").querySelectorAll(".lab-dl").forEach(b=>b.onclick=()=>{const r=state.lab[Number(b.dataset.i)];downloadBlob(r.blob,r.preserved?it.file.name:`${it.file.name.replace(/\.[^.]+$/,"")}_PrintReady_${r.label.replace(/\s/g,"")}.${extFor(r.type)}`)});
+    const last=[...state.lab].reverse().find(r=>r.blob.size<=r.target);
+    $("labSummary").innerHTML=last?`目前這張圖至少可以做到 <b>${last.label}</b> 以內；實際 ${bytes(last.blob.size)}、${last.w}×${last.h}。請下載最低幾檔肉眼看畫質，不要只看數字。`:"目前這張圖連 2MB 都無法安全達標。";
+    $("labSummary").classList.remove("hidden");updateProgress(100);hideProgress();setStatus("極限測試完成。","ok")
+  }
+
+
+  function quickPresetLabel(name){
+    return name==="500k"?"500 KB":name==="1m"?"1 MB":name==="2m"?"2 MB":name==="5m"?"5 MB":"";
+  }
+
+  function syncQuickPreset(name){
+    document.querySelectorAll(".preset.big[data-preset]").forEach(b=>{
+      b.classList.toggle("selected",b.dataset.preset===name);
+      b.setAttribute("aria-pressed",b.dataset.preset===name?"true":"false");
+    });
+    const label=quickPresetLabel(name);
+    if(label){
+      $("quickChoice").innerHTML=`<b>目前選擇：${label}</b>｜按下面「開始處理」即可。`;
+      $("processBtn").textContent=`開始處理（${label}）`;
+    }else{
+      $("processBtn").textContent="開始處理";
+    }
+  }
+
+  function resetSettings(){
+    $("targetMode").value="2m";$("customSize").value="2";$("customUnit").value="mb";$("customSize").disabled=true;$("customUnit").disabled=true;$("compressMode").value="recommended";
+    $("resizeMode").value="keep";$("resizeW").value="1600";$("resizeH").value="1200";$("cropRatio").value="keep";$("customRatio").disabled=true;$("customRatio").value="1";$("cropAnchor").value="center";$("rotation").value="0";$("allowUpscale").checked=false;
+    $("outputFormat").value="keep";$("baseQuality").value=".94";$("bgColor").value="#ffffff";$("stripMeta").checked=false;$("allowJpegFallback").checked=true;
+    syncQuickPreset("2m");
+    setStatus("設定已重設，目前是 2 MB。");
+  }
+  function preset(name){
+    resetSettings();
+
+    if(["500k","1m","2m","5m"].includes(name)){
+      $("targetMode").value=name;
+      syncQuickPreset(name);
+      showTab("quick");
+      const label=quickPresetLabel(name);
+      setStatus(`已選 ${label}，按「開始處理」即可。`,"ok");
+      return;
+    }
+
+    if(name==="jpg1600"){
+      $("targetMode").value="off";$("outputFormat").value="image/jpeg";
+      $("resizeMode").value="long";$("resizeW").value="1600";showTab("dimensions");
+    }
+    if(name==="square"){
+      $("targetMode").value="off";$("cropRatio").value="1";showTab("dimensions");
+    }
+    if(name==="privacy"){
+      $("targetMode").value="off";$("stripMeta").checked=true;showTab("format");
+    }
+  }
+
+  function showTab(id){
+    document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));
+    document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===`panel-${id}`));
+    const dedicated=["spec","privacy","lab"].includes(id);
+    $("globalProcessActions").classList.toggle("hidden",dedicated);
+    clearIssueSummary();
+  }
+
+  $("drop").onclick=()=>$("fileInput").click();$("drop").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();$("fileInput").click()}};
+  ["dragenter","dragover"].forEach(ev=>$("drop").addEventListener(ev,e=>{e.preventDefault();$("drop").classList.add("drag")}));
+  ["dragleave","drop"].forEach(ev=>$("drop").addEventListener(ev,e=>{e.preventDefault();$("drop").classList.remove("drag")}));
+  $("drop").addEventListener("drop",e=>addFiles(e.dataTransfer.files));$("fileInput").onchange=e=>addFiles(e.target.files);
+  $("clearFiles").onclick=clearItems;$("processBtn").onclick=()=>processAll();$("downloadZip").onclick=downloadZip;$("clearResults").onclick=clearResults;$("resetSettings").onclick=resetSettings;
+  $("targetMode").onchange=()=>{
+    const on=$("targetMode").value==="custom";
+    $("customSize").disabled=!on;$("customUnit").disabled=!on;
+    const v=$("targetMode").value;
+    if(["500k","1m","2m","5m"].includes(v))syncQuickPreset(v);
+    else{
+      document.querySelectorAll(".preset.big[data-preset]").forEach(b=>b.classList.remove("selected"));
+      $("processBtn").textContent="開始處理";
+    }
+  };$("cropRatio").onchange=()=>{$("customRatio").disabled=$("cropRatio").value!=="custom"};
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));document.querySelectorAll(".preset[data-preset]").forEach(b=>b.onclick=()=>preset(b.dataset.preset));
+  $("checkSpecBtn").onclick=renderSpecCheck;$("fixSpecBtn").onclick=()=>{const s=specSettings();if(!allowedSpecTypes(s).length){setStatus("規格至少要允許一種格式。","warn");return}processAll(s)};
+  $("labBtn").onclick=labRun;
+  $("privacyLoadBtn").onclick=privacyLoad;
+  $("privacyCenterBtn").onclick=()=>{resetPrivacyPan();setStatus("圖片已回到原位。","ok")};
+  $("privacyUndoBtn").onclick=()=>{privacyState.regions.pop();privacyState.selectedIndex=null;drawPrivacyCanvas();renderPrivacyList()};
+  $("privacyClearBtn").onclick=()=>{privacyState.regions=[];privacyState.selectedIndex=null;drawPrivacyCanvas();renderPrivacyList()};
+  $("privacyDownloadBtn").onclick=privacyDownload;
+  const pc=$("privacyCanvas");
+  const pw=$("privacyCanvasWrap");
+  const ph=$("privacyDropHint");
+  const pfi=$("privacyFileInput");
+
+  // 圖片本身：畫遮蔽 / 移動遮蔽
+  pc.addEventListener("pointerdown",e=>{try{pc.setPointerCapture(e.pointerId)}catch(_){}privacyStart(e)});
+  pc.addEventListener("pointermove",privacyMove);
+  pc.addEventListener("pointerup",e=>{privacyEnd(e);try{pc.releasePointerCapture(e.pointerId)}catch(_){}});
+  pc.addEventListener("pointercancel",e=>{privacyState.drag=null;drawPrivacyCanvas();try{pc.releasePointerCapture(e.pointerId)}catch(_){}});
+
+  // 隱私區空白畫面可直接拖入圖片檔
+  ["dragenter","dragover"].forEach(ev=>pw.addEventListener(ev,e=>{
+    e.preventDefault();e.stopPropagation();pw.classList.add("file-drag");
+  }));
+  ["dragleave","drop"].forEach(ev=>pw.addEventListener(ev,e=>{
+    e.preventDefault();e.stopPropagation();pw.classList.remove("file-drag");
+  }));
+  pw.addEventListener("drop",e=>{
+    const file=e.dataTransfer?.files?.[0];
+    if(file)addPrivacyFile(file);
+  });
+  ph.addEventListener("click",()=>pfi.click());
+  pfi.addEventListener("change",e=>{
+    const file=e.target.files?.[0];
+    if(file)addPrivacyFile(file);
+    e.target.value="";
+  });
+
+  window.addEventListener("resize",()=>{if(privacyState.img)drawPrivacyCanvas()});
+
+  $("rescueFeedbackBugBtn").addEventListener("click",()=>openRescueFeedback("bug"));
+  $("rescueFeedbackIdeaBtn").addEventListener("click",()=>openRescueFeedback("idea"));
+  $("rescueFeedbackCloseBtn").addEventListener("click",closeRescueFeedback);
+  $("rescueFeedbackSendBtn").addEventListener("click",sendRescueFeedback);
+  $("rescueFeedbackBackdrop").addEventListener("click",e=>{if(e.target===$("rescueFeedbackBackdrop"))closeRescueFeedback()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("rescueFeedbackBackdrop").classList.contains("hidden"))closeRescueFeedback()});
+
+  renderFiles();resetSettings();
+})();
+</script>
+
+<div class="pr-feedback-fabs" aria-label="意見回報">
+  <button id="rescueFeedbackBugBtn" class="pr-feedback-fab" type="button">🐞 回報問題</button>
+  <button id="rescueFeedbackIdeaBtn" class="pr-feedback-fab" type="button">💡 功能許願</button>
+</div>
+
+<div id="rescueFeedbackBackdrop" class="pr-feedback-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="rescueFeedbackTitle">
+  <div class="pr-feedback-modal">
+    <h3 id="rescueFeedbackTitle">🐞 回報上傳救援問題</h3>
+    <div id="rescueFeedbackHelp" class="small">請簡單說明發生什麼事、你原本想做什麼。</div>
+    <textarea id="rescueFeedbackText" placeholder="例如：我要壓到 500KB，但處理後網站還是不讓我上傳。"></textarea>
+    <input id="rescueFeedbackContact" type="text" autocomplete="email" placeholder="聯絡方式（選填，例如 Email）" style="margin-top:10px">
+    <div id="rescueFeedbackResult" class="pr-feedback-result hidden"></div>
+    <div class="pr-feedback-actions">
+      <button id="rescueFeedbackSendBtn" class="btn" type="button">送出回報</button>
+      <button id="rescueFeedbackCloseBtn" class="btn secondary" type="button">關閉</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
