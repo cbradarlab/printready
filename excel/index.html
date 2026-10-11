@@ -93,6 +93,55 @@ footer{padding:8px 4px 2px;text-align:center;font-size:10px;color:#879189}
 .pr-feedback-result{white-space:pre-wrap;word-break:break-word;margin-top:10px;padding:10px;border-radius:10px;background:#f7f7f7;border:1px solid var(--line);font-size:10px;line-height:1.55}
 @media(max-width:640px){.pr-feedback-fab-wrap{right:12px;bottom:12px}.pr-feedback-fab{padding:8px 10px}}
 
+
+/* WEB V1.3 mobile scroll guard
+   Mobile pages must use normal document scrolling. Desktop layout stays unchanged.
+   preview-focus-mode keeps its dedicated full-screen behavior. */
+@media (max-width:900px){
+  html{
+    height:auto!important;
+    min-height:100%;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior:auto!important;
+  }
+  body{
+    height:auto!important;
+    min-height:100%;
+    overflow:visible!important;
+    overscroll-behavior:auto!important;
+    touch-action:auto!important;
+  }
+  .shell:not(.preview-focus-mode){
+    display:block!important;
+    height:auto!important;
+    min-height:100vh!important;
+    min-height:100dvh!important;
+    overflow:visible!important;
+  }
+  .shell:not(.preview-focus-mode) .grid{
+    display:block!important;
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  .shell:not(.preview-focus-mode) .tools,
+  .shell:not(.preview-focus-mode) .preview-card{
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    overscroll-behavior:auto!important;
+  }
+  .shell:not(.preview-focus-mode) .preview-card{
+    margin-top:10px;
+  }
+  .shell:not(.preview-focus-mode) .table-wrap{
+    max-height:60vh;
+    overflow:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+
 </style>
 </head>
 <body>
