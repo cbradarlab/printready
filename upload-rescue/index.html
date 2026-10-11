@@ -92,41 +92,20 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
 }
 
 
-.site-back{
-  display:inline-block;margin-top:9px;color:#2f6b4f;text-decoration:none;
-  font-size:12px;font-weight:900
-}
+.site-back{display:inline-block;margin-top:9px;color:#2f6b4f;text-decoration:none;font-size:12px;font-weight:900}
 .site-back:hover{text-decoration:underline}
-.pr-feedback-fabs{
-  position:fixed;right:16px;bottom:16px;z-index:1250;
-  display:flex;flex-direction:column;gap:8px
-}
-.pr-feedback-fab{
-  border:1px solid #d7e2dc;background:#fff;color:#24352b;
-  border-radius:999px;padding:9px 13px;font:inherit;font-size:12px;font-weight:900;
-  cursor:pointer;box-shadow:0 8px 24px rgba(20,35,27,.12)
-}
+.pr-feedback-fabs{position:fixed;right:16px;bottom:16px;z-index:5000;display:flex;flex-direction:column;gap:8px}
+.pr-feedback-fab{display:block;text-decoration:none;border:1px solid #d7e2dc;background:#fff;color:#24352b;border-radius:999px;padding:9px 13px;font:inherit;font-size:12px;font-weight:900;cursor:pointer;box-shadow:0 8px 24px rgba(20,35,27,.12)}
 .pr-feedback-fab:hover{background:#f4faf6}
-.pr-feedback-backdrop{
-  position:fixed;inset:0;z-index:1400;background:rgba(20,28,24,.38);
-  display:flex;align-items:center;justify-content:center;padding:18px
-}
-.pr-feedback-modal{
-  width:min(560px,100%);background:#fff;border:1px solid #d9e3dd;border-radius:16px;
-  padding:16px;box-shadow:0 18px 60px rgba(0,0,0,.22)
-}
+.pr-feedback-backdrop{position:fixed;inset:0;z-index:6000;background:rgba(20,28,24,.42);display:flex;align-items:center;justify-content:center;padding:18px}
+.pr-feedback-modal{width:min(560px,100%);background:#fff;border:1px solid #d9e3dd;border-radius:16px;padding:16px;box-shadow:0 18px 60px rgba(0,0,0,.22)}
 .pr-feedback-modal h3{margin:0 0 8px;font-size:18px}
-.pr-feedback-modal textarea,.pr-feedback-modal input{
-  width:100%;border:1px solid #d9e3dd;border-radius:10px;padding:10px 11px;
-  font:inherit;font-size:12px
-}
+.pr-feedback-modal textarea,.pr-feedback-modal input{width:100%;box-sizing:border-box;border:1px solid #d9e3dd;border-radius:10px;padding:10px 11px;font:inherit;font-size:12px;background:#fff;color:#24352b}
 .pr-feedback-modal textarea{min-height:130px;resize:vertical}
 .pr-feedback-result{margin-top:10px;font-size:12px;line-height:1.55}
 .pr-feedback-actions{display:flex;gap:8px;margin-top:12px}
 .pr-feedback-actions button{flex:1}
-@media(max-width:600px){
-  .pr-feedback-fabs{right:10px;bottom:10px}
-}
+@media(max-width:600px){.pr-feedback-fabs{right:10px;bottom:10px}}
 
 </style>
 </head>
@@ -441,48 +420,54 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
     </div>
   </div>
 
-  <footer>PrintReady｜圖片只在瀏覽器本機處理。大圖片、批次處理建議使用電腦操作。</footer>
+  <footer>PrintReady 上傳救援 V1｜圖片只在瀏覽器本機處理。大圖片、批次處理建議使用電腦操作。</footer>
 </div>
 
-<script>
-(()=>{
+
+<div class="pr-feedback-fabs" aria-label="意見回報">
+  <a id="rescueFeedbackBugBtn" class="pr-feedback-fab"
+     href="https://docs.google.com/forms/d/e/1FAIpQLSeHTsDgpzZZKG1Uz1rNltKLOLUuOTmsIQaHReLP9GSzzPkzXQ/viewform?usp=pp_url&entry.689706475=%F0%9F%90%9E+%E5%95%8F%E9%A1%8C%E5%9B%9E%E5%A0%B1&entry.1215590251=%F0%9F%9A%91+%E4%B8%8A%E5%82%B3%E6%95%91%E6%8F%B4" target="_blank" rel="noopener noreferrer">🐞 回報問題</a>
+  <a id="rescueFeedbackIdeaBtn" class="pr-feedback-fab"
+     href="https://docs.google.com/forms/d/e/1FAIpQLSeHTsDgpzZZKG1Uz1rNltKLOLUuOTmsIQaHReLP9GSzzPkzXQ/viewform?usp=pp_url&entry.689706475=%F0%9F%92%A1+%E5%8A%9F%E8%83%BD%E8%A8%B1%E9%A1%98&entry.1215590251=%F0%9F%9A%91+%E4%B8%8A%E5%82%B3%E6%95%91%E6%8F%B4" target="_blank" rel="noopener noreferrer">💡 功能許願</a>
+</div>
+
+<div id="rescueFeedbackBackdrop" class="pr-feedback-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="rescueFeedbackTitle">
+  <div class="pr-feedback-modal">
+    <h3 id="rescueFeedbackTitle">🐞 回報上傳救援問題</h3>
+    <div id="rescueFeedbackHelp" class="small">請簡單說明發生什麼事、你原本想做什麼。</div>
+    <textarea id="rescueFeedbackText" placeholder="例如：我要壓到 500KB，但處理後網站還是不讓我上傳。"></textarea>
+    <input id="rescueFeedbackContact" type="text" autocomplete="email" placeholder="聯絡方式（選填，例如 Email）" style="margin-top:10px">
+    <div id="rescueFeedbackResult" class="pr-feedback-result hidden"></div>
+    <div class="pr-feedback-actions">
+      <button id="rescueFeedbackSendBtn" class="btn" type="button">送出回報</button>
+      <button id="rescueFeedbackCloseBtn" class="btn secondary" type="button">關閉</button>
+    </div>
+  </div>
+</div>
+
+<script id="printready-rescue-feedback">
+(function(){
+  "use strict";
   const $=id=>document.getElementById(id);
-
-  const RESCUE_USAGE_TRACK_ENDPOINT="https://printready-usage.crzaybetray.workers.dev/track";
-  const RESCUE_USAGE_EVENT="upload_rescue";
-  const RESCUE_USAGE_SEEN_KEY="printready_usage_seen_v1:upload_rescue";
-
-  async function trackRescueUsage(){
-    try{
-      if(sessionStorage.getItem(RESCUE_USAGE_SEEN_KEY)==="1")return;
-      const response=await fetch(RESCUE_USAGE_TRACK_ENDPOINT,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({event:RESCUE_USAGE_EVENT})
-      });
-      if(response.ok)sessionStorage.setItem(RESCUE_USAGE_SEEN_KEY,"1");
-    }catch(_){}
-  }
-
-  const RESCUE_FEEDBACK_FORM_ENDPOINT="https://docs.google.com/forms/d/e/1FAIpQLSeHTsDgpzZZKG1Uz1rNltKLOLUuOTmsIQaHReLP9GSzzPkzXQ/formResponse";
-  const RESCUE_FEEDBACK_FORM_FIELDS={
+  const FORM_ENDPOINT="https://docs.google.com/forms/d/e/1FAIpQLSeHTsDgpzZZKG1Uz1rNltKLOLUuOTmsIQaHReLP9GSzzPkzXQ/formResponse";
+  const FIELDS={
     kind:"entry.689706475",
     body:"entry.25719909",
     tool:"entry.1215590251",
     environment:"entry.1199012304",
     contact:"entry.1654610563"
   };
-  let rescueFeedbackKind="bug";
+  let feedbackKind="bug";
 
-  function rescueFeedbackBrowserSummary(){
+  function browserSummary(){
     const ua=navigator.userAgent||"";
-    const platform=navigator.userAgentData?.platform||navigator.platform||"";
+    const platform=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||"";
     return `PrintReady 上傳救援 V1 | ${platform} | ${ua}`;
   }
 
-  function openRescueFeedback(kind){
-    rescueFeedbackKind=kind==="idea"?"idea":"bug";
-    const isBug=rescueFeedbackKind==="bug";
+  function openFeedback(kind){
+    feedbackKind=kind==="idea"?"idea":"bug";
+    const isBug=feedbackKind==="bug";
     $("rescueFeedbackTitle").textContent=isBug?"🐞 回報上傳救援問題":"💡 上傳救援功能許願";
     $("rescueFeedbackHelp").textContent=isBug
       ?"請簡單說明發生什麼事、你原本想做什麼。"
@@ -499,11 +484,11 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
     setTimeout(()=>$("rescueFeedbackText").focus(),30);
   }
 
-  function closeRescueFeedback(){
+  function closeFeedback(){
     $("rescueFeedbackBackdrop").classList.add("hidden");
   }
 
-  async function sendRescueFeedback(){
+  async function sendFeedback(){
     const body=($("rescueFeedbackText").value||"").trim();
     if(!body){
       $("rescueFeedbackResult").classList.remove("hidden");
@@ -511,37 +496,77 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
       $("rescueFeedbackText").focus();
       return;
     }
-    const isBug=rescueFeedbackKind==="bug";
-    const button=$("rescueFeedbackSendBtn");
-    button.disabled=true;
-    button.textContent="正在送出…";
+    const isBug=feedbackKind==="bug";
+    const btn=$("rescueFeedbackSendBtn");
+    btn.disabled=true;
+    btn.textContent="正在送出…";
+
     const params=new URLSearchParams();
-    params.set(RESCUE_FEEDBACK_FORM_FIELDS.kind,isBug?"問題回報":"功能許願");
-    params.set(RESCUE_FEEDBACK_FORM_FIELDS.body,body);
-    params.set(RESCUE_FEEDBACK_FORM_FIELDS.tool,"🚑 上傳救援");
-    params.set(RESCUE_FEEDBACK_FORM_FIELDS.environment,rescueFeedbackBrowserSummary());
-    params.set(RESCUE_FEEDBACK_FORM_FIELDS.contact,($("rescueFeedbackContact").value||"").trim());
+    params.set(FIELDS.kind,isBug?"🐞 問題回報":"💡 功能許願");
+    params.set(FIELDS.body,body+"\n\n[版本] PrintReady 上傳救援 V1");
+    params.set(FIELDS.tool,"🚑 上傳救援");
+    params.set(FIELDS.environment,browserSummary());
+    params.set(FIELDS.contact,($("rescueFeedbackContact").value||"").trim());
+
     $("rescueFeedbackResult").classList.remove("hidden");
     $("rescueFeedbackResult").textContent="正在送出，請稍候…";
     try{
-      await fetch(RESCUE_FEEDBACK_FORM_ENDPOINT,{
-        method:"POST",
-        mode:"no-cors",
-        headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-        body:params.toString()
-      });
+      await fetch(FORM_ENDPOINT,{method:"POST",mode:"no-cors",body:params});
       $("rescueFeedbackResult").textContent=isBug?"✅ 問題回報已送出。":"✅ 功能許願已送出。";
-      $("rescueFeedbackText").value="";
-      $("rescueFeedbackContact").value="";
-      button.textContent="✅ 已送出";
-      setTimeout(closeRescueFeedback,900);
-    }catch(_){
-      $("rescueFeedbackResult").textContent="⚠️ 目前無法送出，內容已保留，請稍後再試。";
-      button.disabled=false;
-      button.textContent=isBug?"送出回報":"送出許願";
+      btn.textContent="✅ 已送出";
+      setTimeout(closeFeedback,900);
+    }catch(e){
+      $("rescueFeedbackResult").textContent="⚠️ 目前無法直接送出。請按右下角按鈕重新開啟 Google 表單。";
+      btn.disabled=false;
+      btn.textContent=isBug?"送出回報":"送出許願";
     }
   }
 
+  function init(){
+    const bug=$("rescueFeedbackBugBtn");
+    const idea=$("rescueFeedbackIdeaBtn");
+    const close=$("rescueFeedbackCloseBtn");
+    const send=$("rescueFeedbackSendBtn");
+    const backdrop=$("rescueFeedbackBackdrop");
+    if(!bug||!idea||!close||!send||!backdrop)return;
+
+    // JS 正常時：頁內跳窗。若這段 JS 未執行，<a href> 仍會直接開 Google Form。
+    bug.addEventListener("click",e=>{e.preventDefault();openFeedback("bug")});
+    idea.addEventListener("click",e=>{e.preventDefault();openFeedback("idea")});
+    close.addEventListener("click",closeFeedback);
+    send.addEventListener("click",sendFeedback);
+    backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeFeedback()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!backdrop.classList.contains("hidden"))closeFeedback()});
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
+  else init();
+})();
+</script>
+
+
+<script id="printready-rescue-usage">
+(function(){
+  "use strict";
+  const ENDPOINT="https://printready-usage.crzaybetray.workers.dev/track";
+  const KEY="printready_usage_seen_v1:upload_rescue";
+  window.PRTrackRescueUsage=async function(){
+    try{
+      if(sessionStorage.getItem(KEY)==="1")return;
+      const r=await fetch(ENDPOINT,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({event:"upload_rescue"})
+      });
+      if(r.ok)sessionStorage.setItem(KEY,"1");
+    }catch(_){}
+  };
+})();
+</script>
+
+<script>
+(()=>{
+  const $=id=>document.getElementById(id);
   const state={items:[],results:[],lab:[],lastSpec:null};
   const privacyState={itemId:null,img:null,regions:[],drag:null,selectedIndex:null,displayScale:1,sourceW:0,sourceH:0,panX:0,panY:0,panDrag:null};
   let idSeq=1;
@@ -1188,7 +1213,6 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
       updateProgress(5+(i+1)/state.items.length*90);
     }
     renderResults();
-    if(state.results.some(x=>!x.error))trackRescueUsage();
     if(spec)renderSpecCheckAfterFix(spec);
     updateProgress(100);hideProgress();
     const problems=state.results.filter(x=>x.error||x.result?.hit===false||x.result?.specIssues?.length);
@@ -1498,36 +1522,8 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
   });
 
   window.addEventListener("resize",()=>{if(privacyState.img)drawPrivacyCanvas()});
-
-  $("rescueFeedbackBugBtn").addEventListener("click",()=>openRescueFeedback("bug"));
-  $("rescueFeedbackIdeaBtn").addEventListener("click",()=>openRescueFeedback("idea"));
-  $("rescueFeedbackCloseBtn").addEventListener("click",closeRescueFeedback);
-  $("rescueFeedbackSendBtn").addEventListener("click",sendRescueFeedback);
-  $("rescueFeedbackBackdrop").addEventListener("click",e=>{if(e.target===$("rescueFeedbackBackdrop"))closeRescueFeedback()});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("rescueFeedbackBackdrop").classList.contains("hidden"))closeRescueFeedback()});
-
   renderFiles();resetSettings();
 })();
 </script>
-
-<div class="pr-feedback-fabs" aria-label="意見回報">
-  <button id="rescueFeedbackBugBtn" class="pr-feedback-fab" type="button">🐞 回報問題</button>
-  <button id="rescueFeedbackIdeaBtn" class="pr-feedback-fab" type="button">💡 功能許願</button>
-</div>
-
-<div id="rescueFeedbackBackdrop" class="pr-feedback-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="rescueFeedbackTitle">
-  <div class="pr-feedback-modal">
-    <h3 id="rescueFeedbackTitle">🐞 回報上傳救援問題</h3>
-    <div id="rescueFeedbackHelp" class="small">請簡單說明發生什麼事、你原本想做什麼。</div>
-    <textarea id="rescueFeedbackText" placeholder="例如：我要壓到 500KB，但處理後網站還是不讓我上傳。"></textarea>
-    <input id="rescueFeedbackContact" type="text" autocomplete="email" placeholder="聯絡方式（選填，例如 Email）" style="margin-top:10px">
-    <div id="rescueFeedbackResult" class="pr-feedback-result hidden"></div>
-    <div class="pr-feedback-actions">
-      <button id="rescueFeedbackSendBtn" class="btn" type="button">送出回報</button>
-      <button id="rescueFeedbackCloseBtn" class="btn secondary" type="button">關閉</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
