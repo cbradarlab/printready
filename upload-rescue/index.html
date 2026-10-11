@@ -108,6 +108,10 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
 @media(max-width:600px){.pr-feedback-fabs{right:10px;bottom:10px}}
 
 </style>
+
+<link rel="stylesheet" href="../shared/feedback.css">
+<style>#rescueFeedbackBugBtn,#rescueFeedbackIdeaBtn,#rescueFeedbackBackdrop{display:none!important}</style>
+
 </head>
 <body>
 <div class="shell">
@@ -1525,5 +1529,11 @@ footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;margi
   renderFiles();resetSettings();
 })();
 </script>
+
+<script>
+window.PrintReadyFeedbackConfig={"tool": "🚑 上傳救援", "version": "V1", "features": ["壓縮", "上傳規格檢查", "改尺寸／裁切／旋轉", "格式轉換", "隱私遮蔽", "移除拍攝資訊", "批次 ZIP", "其他"]};
+</script>
+<script src="../shared/feedback.js"></script>
+
 </body>
 </html>

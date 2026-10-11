@@ -143,6 +143,10 @@ footer{padding:8px 4px 2px;text-align:center;font-size:10px;color:#879189}
 }
 
 </style>
+
+<link rel="stylesheet" href="../shared/feedback.css">
+<style>#excelFeedbackBugBtn,#excelFeedbackIdeaBtn,#excelFeedbackBackdrop{display:none!important}</style>
+
 </head>
 <body>
 <div class="shell">
@@ -2218,5 +2222,11 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("excelFeedbackBa
 formatUi();filterUi();splitUi();applyPreviewZoom();renderAll();
 })();
 </script>
+
+<script>
+window.PrintReadyFeedbackConfig={"tool": "📊 Excel 幫我整理", "version": "V1 FINAL", "features": ["排序", "篩選", "清理", "取代", "去重", "欄位／資料整理", "輸出／下載", "其他"]};
+</script>
+<script src="../shared/feedback.js"></script>
+
 </body>
 </html>

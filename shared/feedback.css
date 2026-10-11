@@ -1,0 +1,50 @@
+
+/* PrintReady 共用回報 V1 */
+.prc-feedback-fabs{
+  position:fixed;right:16px;bottom:16px;z-index:9000;
+  display:flex;flex-direction:column;gap:8px;align-items:flex-end
+}
+.prc-feedback-fab{
+  display:block;text-decoration:none;border:1px solid #d7e2dc;background:#fff;color:#24352b;
+  border-radius:999px;padding:9px 13px;font:inherit;font-size:12px;font-weight:900;
+  cursor:pointer;box-shadow:0 8px 24px rgba(20,35,27,.13)
+}
+.prc-feedback-fab:hover{background:#f4faf6;transform:translateY(-1px)}
+.prc-feedback-backdrop{
+  position:fixed;inset:0;z-index:9100;background:rgba(20,28,24,.42);
+  display:flex;align-items:center;justify-content:center;padding:18px
+}
+.prc-hidden{display:none!important}
+.prc-feedback-modal{
+  width:min(620px,100%);max-height:88vh;overflow:auto;background:#fff;color:#24352b;
+  border:1px solid #d9e3dd;border-radius:18px;padding:17px;
+  box-shadow:0 20px 70px rgba(0,0,0,.24)
+}
+.prc-feedback-modal h3{margin:0 0 5px;font-size:19px}
+.prc-feedback-help{font-size:12px;line-height:1.55;color:#66746c;margin-bottom:12px}
+.prc-feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prc-field{margin-top:10px}
+.prc-field label{display:block;margin-bottom:5px;font-size:11px;font-weight:900}
+.prc-field select,.prc-field textarea,.prc-field input{
+  width:100%;box-sizing:border-box;border:1px solid #d9e3dd;border-radius:10px;
+  padding:10px 11px;font:inherit;font-size:12px;background:#fff;color:#24352b
+}
+.prc-field textarea{min-height:115px;resize:vertical;line-height:1.55}
+.prc-field textarea.prc-short{min-height:75px}
+.prc-result{
+  margin-top:10px;padding:10px;border-radius:10px;background:#f7f7f7;
+  border:1px solid #d9e3dd;font-size:11px;line-height:1.55
+}
+.prc-actions{display:flex;gap:8px;margin-top:12px}
+.prc-actions button{
+  flex:1;border:0;border-radius:10px;padding:10px 12px;font:inherit;font-size:12px;font-weight:900;cursor:pointer
+}
+.prc-send{background:#173d2b;color:#fff}
+.prc-close{background:#eef2ef;color:#24352b}
+.prc-fallback{margin-top:8px;font-size:10px;color:#66746c}
+.prc-fallback a{color:#2f6b4f;font-weight:900}
+@media(max-width:640px){
+  .prc-feedback-fabs{right:10px;bottom:10px}
+  .prc-feedback-grid{grid-template-columns:1fr}
+  .prc-feedback-modal{padding:14px}
+}
