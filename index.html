@@ -457,6 +457,17 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
 .home-start-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:11px}
 .home-start-title{font-size:18px;font-weight:950;letter-spacing:-.02em}
 .home-start-sub{font-size:12px;color:var(--muted);line-height:1.5;margin-top:3px}
+.excel-entry{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;
+  margin:0 0 11px;padding:13px 14px;border:1px solid #cfe1d7;border-radius:14px;
+  background:#f3faf6;color:var(--text);text-decoration:none;transition:.16s ease
+}
+.excel-entry:hover{background:#edf8f2;border-color:#a9cdb8;transform:translateY(-1px)}
+.excel-entry-icon{font-size:26px;line-height:1}
+.excel-entry-title{font-size:14px;font-weight:950;margin-bottom:3px}
+.excel-entry-sub{font-size:11px;line-height:1.5;color:var(--muted)}
+.excel-entry-go{font-size:11px;font-weight:950;color:#2f694d;white-space:nowrap}
+@media(max-width:520px){.excel-entry{grid-template-columns:auto minmax(0,1fr)}.excel-entry-go{grid-column:2}}
 .home-main-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .home-action{
   border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px;
@@ -560,6 +571,15 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
       <div class="home-start-sub">不用先懂印刷術語，直接選最接近你需求的項目。</div>
     </div>
   </div>
+
+  <a class="excel-entry" href="./excel/index.html" aria-label="開啟 Excel 幫我整理">
+    <span class="excel-entry-icon">📊</span>
+    <span>
+      <span class="excel-entry-title">Excel 幫我整理</span>
+      <span class="excel-entry-sub">Excel / CSV 哪裡怪不用自己找：自動檢查常見問題，能安全處理的直接整理。</span>
+    </span>
+    <span class="excel-entry-go">開啟 →</span>
+  </a>
 
   <div class="home-main-actions">
     <button class="home-action" type="button" data-home-mode="image">
