@@ -479,7 +479,17 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
 .rescue-entry-sub{font-size:11px;line-height:1.5;color:var(--muted)}
 .rescue-entry-go{font-size:11px;font-weight:950;color:#315f79;white-space:nowrap}
 @media(max-width:520px){.rescue-entry{grid-template-columns:auto minmax(0,1fr)}.rescue-entry-go{grid-column:2}}
-
+.scan-entry{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;
+  margin:0 0 11px;padding:13px 14px;border:1px solid #d8dfc7;border-radius:14px;
+  background:#f8faef;color:var(--text);text-decoration:none;transition:.16s ease
+}
+.scan-entry:hover{background:#f3f7e8;border-color:#c2cf9b;transform:translateY(-1px)}
+.scan-entry-icon{font-size:26px;line-height:1}
+.scan-entry-title{font-size:14px;font-weight:950;margin-bottom:3px}
+.scan-entry-sub{font-size:11px;line-height:1.5;color:var(--muted)}
+.scan-entry-go{font-size:11px;font-weight:950;color:#5f6f32;white-space:nowrap}
+@media(max-width:520px){.scan-entry{grid-template-columns:auto minmax(0,1fr)}.scan-entry-go{grid-column:2}}
 .home-main-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .home-action{
   border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px;
@@ -565,7 +575,7 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
   <div>
     <h1>幫我印好</h1>
     <p class="tagline hero-tagline">圖片、標籤、卡片、PDF，不用自己算尺寸。<br>選你要做的事、放入檔案，下載可以直接使用的結果。</p>
-    <p class="seo-intro">免費線上檔案工具：圖片指定尺寸、證件照排版、標籤／貼紙、名片小卡、PDF 整理、上傳救援，以及 Excel / CSV 常見問題整理。</p>
+    <p class="seo-intro">免費線上檔案工具：圖片指定尺寸、證件照排版、標籤／貼紙、名片小卡、PDF 整理、上傳救援、掃描救援，以及 Excel / CSV 常見問題整理。</p>
     <p class="product-principle">我們不幫你設計人生，也不管理資料。只負責把你想印的東西準備好。</p>
   </div>
   <div class="badge">PUBLIC V1.4</div>
@@ -595,6 +605,15 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center}
       <span class="rescue-entry-sub">圖片太大、尺寸不對、格式不符或有敏感資料？幫你整理成比較適合上傳的檔案。</span>
     </span>
     <span class="rescue-entry-go">開啟 →</span>
+  </a>
+
+  <a class="scan-entry" href="./scan-rescue/index.html" aria-label="開啟掃描救援">
+    <span class="scan-entry-icon">📷</span>
+    <span>
+      <span class="scan-entry-title">掃描救援</span>
+      <span class="scan-entry-sub">文件拍歪、透視跑掉或有很多頁？自動抓角、拉正、排序，最後直接下載 PDF。</span>
+    </span>
+    <span class="scan-entry-go">開啟 →</span>
   </a>
 
   <a class="excel-entry" href="./excel/index.html" aria-label="開啟 Excel 幫我整理">
