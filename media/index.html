@@ -24,6 +24,13 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 7px 24px rgba(20,25,35,.045)}
 .icon{font-size:25px;margin-bottom:8px}.card h2{font-size:16px;margin:0 0 5px}.card p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}
+.flow{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}
+.flow h2{font-size:16px;margin:0 0 10px}
+.flow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.flow-step{border:1px solid var(--line);border-radius:13px;padding:13px;background:#fafbfc}
+.flow-step b{display:block;font-size:13px;margin-bottom:4px}
+.flow-step span{display:block;color:var(--muted);font-size:11px;line-height:1.55}
+.platform{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.6}
 .status{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}
 .status h2{font-size:16px;margin:0 0 8px}.status p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
 .status strong{color:var(--text)}
@@ -32,7 +39,7 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
 .btn.primary{background:#17191c;color:#fff;border-color:#17191c}
 .btn.disabled{opacity:.55;cursor:not-allowed;pointer-events:none}
 .foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.65}
-@media(max-width:650px){.top{display:block}.badge{display:inline-block;margin-top:12px}.grid{grid-template-columns:1fr}}
+@media(max-width:650px){.top{display:block}.badge{display:inline-block;margin-top:12px}.grid,.flow-grid{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="../shared/feedback.css">
 </head>
@@ -54,6 +61,16 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
     <div class="card"><div class="icon">💬</div><h2>字幕</h2><p>把影片或音訊裡的語音自動辨識成字幕，可整理字幕文字，再輸出成有字幕的影片。</p></div>
     <div class="card"><div class="icon">✂️</div><h2>分割／合併</h2><p>把長影片切成需要的片段，不要的段落可以拿掉；需要時再把片段或新影片重新合併成 MP4。</p></div>
     <div class="card"><div class="icon">📦</div><h2>素材抽取</h2><p>可從影片中抽出畫面圖片、音訊 MP3 等素材；完成後統一打包成 ZIP 下載，不會一次跳出一堆零散檔案。</p></div>
+  </div>
+
+  <div class="flow">
+    <h2>怎麼使用？</h2>
+    <div class="flow-grid">
+      <div class="flow-step"><b>1️⃣ 開啟桌面版</b><span>RC3 正式封版後，會在這一頁提供 Windows 桌面版入口。</span></div>
+      <div class="flow-step"><b>2️⃣ 放入影片或音訊</b><span>檔案直接交給電腦本機處理，不需要先把大型影片上傳到網站。</span></div>
+      <div class="flow-step"><b>3️⃣ 選功能並下載結果</b><span>轉檔、字幕、分割／合併或素材抽取完成後，再下載需要的 MP4、MP3、字幕或 ZIP。</span></div>
+    </div>
+    <div class="platform">目前桌面版以 Windows 為主；等 RC3 正式封版後再接上正式下載／啟動入口。</div>
   </div>
 
   <div class="status">
