@@ -24,6 +24,7 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
 .notice strong{color:#4f390e}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 7px 24px rgba(20,25,35,.045)}
+.card.wide{grid-column:1/-1}
 .icon{font-size:25px;margin-bottom:8px}.card h2{font-size:16px;margin:0 0 5px}.card p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}
 .flow{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}
 .flow h2{font-size:16px;margin:0 0 10px}
@@ -39,11 +40,16 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
 .status{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}
 .status h2{font-size:16px;margin:0 0 8px}.status p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
 .status strong{color:var(--text)}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.download-block{margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
+.download-block:first-of-type{margin-top:10px}
+.download-title{font-size:13px;font-weight:900;margin-bottom:4px}
+.download-note{font-size:11px;color:var(--muted);line-height:1.65}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
 .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:11px;padding:10px 13px;font-size:12px;font-weight:900;border:1px solid var(--line);background:#fff;color:var(--text)}
 .btn.primary{background:#17191c;color:#fff;border-color:#17191c}
+.btn.audio{background:#2f6f55;color:#fff;border-color:#2f6f55}
 .foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.65}
-@media(max-width:650px){.top{display:block}.badge{display:inline-block;margin-top:12px}.grid,.flow-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.top{display:block}.badge{display:inline-block;margin-top:12px}.grid,.flow-grid{grid-template-columns:1fr}.card.wide{grid-column:auto}}
 </style>
 <link rel="stylesheet" href="../shared/feedback.css">
 </head>
@@ -52,54 +58,68 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
   <div class="top">
     <div>
       <h1>🎬 影音工具</h1>
-      <div class="sub">為了讓長影片、字幕與轉檔跑得更快、更穩，影音工具使用 Windows 桌面版處理。影片不需要先上傳到網站，工作會在你的電腦本機完成。</div>
+      <div class="sub">為了讓長影片、字幕與轉檔跑得更快、更穩，影音工具使用 Windows 桌面版處理。影片不需要先上傳到網站，工作會在你的電腦本機完成；另外也提供獨立的 MP3 音量調整工具。</div>
       <a class="back" href="../index.html">← 回到幫我印好</a>
     </div>
     <div class="badge">DESKTOP｜RC3 正式版</div>
   </div>
 
-  <div class="local">🔒 <strong>影音檔不會先上傳到「幫我印好」網站。</strong> 下載桌面版後，轉檔、字幕、分割／合併與素材抽取都在你的電腦處理。</div>
-  <div class="notice"><strong>先說清楚：這不是「打開網頁就直接處理影片」的線上版。</strong><br>需要先下載一次 Windows 桌面版。這樣做是為了讓大型影片與字幕處理能直接使用你的電腦效能，不必把大檔案上傳到網路上。</div>
+  <div class="local">🔒 <strong>影音檔不會先上傳到「幫我印好」網站。</strong> 下載桌面版後，轉檔、字幕、分割／合併、素材抽取與 MP3 音量調整都在你的電腦處理。</div>
+  <div class="notice"><strong>先說清楚：這不是「打開網頁就直接處理影片」的線上版。</strong><br>需要先下載一次 Windows 桌面工具。這樣做是為了讓大型影片、字幕與音訊處理能直接使用你的電腦效能，不必把大檔案上傳到網路上。</div>
 
   <div class="grid">
     <div class="card"><div class="icon">🔄</div><h2>影片／音樂轉檔</h2><p>影片與音樂格式互轉，可輸出 MP4、MP3 等常見格式。MP3 可選 128 kbps（檔案較小）或 192 kbps（音質較好）。</p></div>
     <div class="card"><div class="icon">💬</div><h2>字幕</h2><p>自動把影片或音訊裡的語音整理成字幕。可選最快的可開關字幕，或把目前字型、顏色與位置固定在影片上的永久字幕。</p></div>
     <div class="card"><div class="icon">✂️</div><h2>分割／合併</h2><p>把長影片切成需要的片段，不要的段落可以取消；需要時再把片段或其他影片重新合併成 MP4。</p></div>
     <div class="card"><div class="icon">📦</div><h2>素材抽取</h2><p>可從影片中抽出畫面圖片或 MP3 音訊；MP3 可選 128／192 kbps，圖片等多個素材會整理成 ZIP 下載。</p></div>
+    <div class="card wide"><div class="icon">🔊</div><h2>MP3 音量調整</h2><p>統一一首或多首 MP3 的播放音量，可快速選 89／95／100／105 dB，也能微調。使用 MP3Gain／ReplayGain 邏輯，不重新編碼，調整後另存新檔，不覆蓋原始 MP3。</p></div>
   </div>
 
   <div class="flow">
-    <h2>第一次使用｜下載後怎麼開？</h2>
+    <h2>第一次使用｜完整影音桌面版怎麼開？</h2>
     <div class="flow-grid">
       <div class="flow-step"><b>1️⃣ 下載 ZIP</b><span>按下方「下載 Windows RC3」。下載完成後，先把 ZIP 完整解壓縮，不要直接在 ZIP 裡開程式。</span></div>
       <div class="flow-step"><b>2️⃣ 打開桌面版</b><span>進入解壓縮後的資料夾，雙擊下面這個檔案：</span><span class="file-name">PrintReady_Desktop_V1_RC3.exe</span></div>
       <div class="flow-step"><b>3️⃣ 放入影片開始使用</b><span>開啟後就能直接轉檔、做字幕、分割／合併或抽取素材。處理結果會存回你的電腦。</span></div>
     </div>
-    <div class="platform">這是免安裝的 Windows 桌面版。請保留整個解壓縮後的資料夾，不要只把執行檔單獨搬走。</div>
+    <div class="platform">這是免安裝的 Windows 桌面版。請保留整個解壓縮後的資料夾，不要只把執行檔單獨搬走。MP3 音量調整是另一個獨立的小工具，可從下方另外下載。</div>
   </div>
 
   <div class="why">
     <h2>為什麼不是全部放在網頁裡？</h2>
-    <p>純網頁處理大型影片時，速度、記憶體與瀏覽器限制會比較多。桌面版可以直接使用你的電腦來處理，因此更適合長影片、永久字幕與大量轉檔。你需要多做的只有「下載一次、解壓縮、開啟程式」。</p>
-    <div class="warning">🛡️ <strong>第一次開啟可能會看到 Windows 安全提示。</strong> 目前版本沒有購買程式碼簽章，因此 Windows 可能跳出 SmartScreen。如果你是從本頁下載，而且檔名是 <strong>PrintReady_Desktop_V1_RC3.exe</strong>，可以選「其他資訊」→「仍要執行」。如果來源或檔名不一樣，請不要執行。</div>
+    <p>純網頁處理大型影片時，速度、記憶體與瀏覽器限制會比較多。桌面工具可以直接使用你的電腦來處理，因此更適合長影片、永久字幕、大量轉檔與 MP3 音量調整。你需要多做的只有「下載一次、解壓縮、開啟程式」。</p>
+    <div class="warning">🛡️ <strong>第一次開啟可能會看到 Windows 安全提示。</strong> 目前這些桌面工具沒有購買程式碼簽章，因此 Windows 可能跳出 SmartScreen。請確認是從本頁下載後，再選「其他資訊」→「仍要執行」；如果來源不是本頁，請不要執行。</div>
   </div>
 
   <div class="status">
-    <h2>下載正式版</h2>
-    <p><strong>PrintReady Desktop V1 RC3 已正式封版。</strong> 目前提供 Windows x64 版本。後續新增功能會從新版本繼續，不直接改動 RC3。</p>
-    <div class="actions">
-      <a class="btn primary" href="https://www.dropbox.com/scl/fi/ijsqi01eompbsrk7qfdht/PrintReady_Desktop_V1_RC3_FINAL_SEALED_Windows_x64.zip?rlkey=bycww81yhm2v8ixj9daki9py9&amp;dl=1" target="_blank" rel="noopener">⬇️ 下載 Windows RC3</a>
-      <a class="btn" href="../index.html">回主站</a>
+    <h2>下載工具</h2>
+    <p><strong>PrintReady Desktop V1 RC3 已正式封版。</strong> RC3 本體保持 frozen；MP3 音量調整以獨立工具提供，不回頭改動 RC3。</p>
+
+    <div class="download-block">
+      <div class="download-title">🎬 完整影音工具｜Windows RC3</div>
+      <div class="download-note">轉檔、字幕、分割／合併、素材抽取。Windows x64 免安裝版。</div>
+      <div class="actions">
+        <a class="btn primary" href="https://www.dropbox.com/scl/fi/ijsqi01eompbsrk7qfdht/PrintReady_Desktop_V1_RC3_FINAL_SEALED_Windows_x64.zip?rlkey=bycww81yhm2v8ixj9daki9py9&amp;dl=1" target="_blank" rel="noopener">⬇️ 下載 Windows RC3</a>
+      </div>
+    </div>
+
+    <div class="download-block">
+      <div class="download-title">🔊 MP3 音量調整｜V1.5.3 FIX2</div>
+      <div class="download-note">89／95／100／105 dB、批次 MP3、不重新編碼、另存新檔不覆蓋原檔。</div>
+      <div class="actions">
+        <a class="btn audio" href="https://www.dropbox.com/scl/fi/uk0332jrqtd7hlqxi5a70/PrintReady_MP3_VOLUME_V1_5_3_FIX2_INSTANT_TARGET_CONTROLS_FINAL_SEALED_20261014_Windows_x64.zip?rlkey=7npem78ujnxpet94gosr7v21u&amp;dl=1" target="_blank" rel="noopener">⬇️ 下載 MP3 音量調整</a>
+        <a class="btn" href="../index.html">回主站</a>
+      </div>
     </div>
   </div>
 
-  <div class="foot">幫我印好 PrintReady｜Desktop V1 RC3｜大型影音本機處理</div>
+  <div class="foot">幫我印好 PrintReady｜Desktop V1 RC3｜大型影音本機處理｜MP3 音量調整</div>
 </div>
 <script>
 window.PrintReadyFeedbackConfig={
   tool:"🎬 影音工具",
-  version:"Desktop V1 RC3",
-  features:["影音入口","下載／開啟","轉檔","字幕","分割／合併","素材抽取","其他"]
+  version:"Desktop V1 RC3 + MP3 Volume V1.5.3 FIX2",
+  features:["影音入口","下載／開啟","轉檔","字幕","分割／合併","素材抽取","MP3 音量調整","其他"]
 };
 </script>
 <script src="../shared/feedback.js"></script>
