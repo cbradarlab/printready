@@ -19,7 +19,9 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
 .badge{border:1px solid var(--accent-line);background:var(--soft);color:var(--accent);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900;white-space:nowrap}
 .back{display:inline-flex;margin-top:12px;color:#4e6658;text-decoration:none;font-size:12px;font-weight:900}
 .back:hover{text-decoration:underline}
-.local{margin:20px 0;padding:14px 16px;border:1px solid #cfe1d7;background:#f1f8f4;border-radius:14px;color:#285b3d;font-size:13px;line-height:1.65;font-weight:750}
+.local{margin:20px 0 12px;padding:14px 16px;border:1px solid #cfe1d7;background:#f1f8f4;border-radius:14px;color:#285b3d;font-size:13px;line-height:1.65;font-weight:750}
+.notice{margin:0 0 18px;padding:14px 16px;border:1px solid #ead5a4;background:#fff8e8;border-radius:14px;color:#6d511c;font-size:13px;line-height:1.7}
+.notice strong{color:#4f390e}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 7px 24px rgba(20,25,35,.045)}
 .icon{font-size:25px;margin-bottom:8px}.card h2{font-size:16px;margin:0 0 5px}.card p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}
@@ -27,16 +29,19 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
 .flow h2{font-size:16px;margin:0 0 10px}
 .flow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
 .flow-step{border:1px solid var(--line);border-radius:13px;padding:13px;background:#fafbfc}
-.flow-step b{display:block;font-size:13px;margin-bottom:4px}
-.flow-step span{display:block;color:var(--muted);font-size:11px;line-height:1.55}
-.platform{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.6}
+.flow-step b{display:block;font-size:13px;margin-bottom:5px}
+.flow-step span{display:block;color:var(--muted);font-size:11px;line-height:1.6}
+.file-name{display:inline-block;margin-top:7px;padding:4px 7px;border-radius:7px;background:#eef1f4;color:#30343a;font-size:11px;font-weight:900;word-break:break-all}
+.platform{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.65}
+.why{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}
+.why h2{font-size:16px;margin:0 0 9px}.why p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
+.warning{margin-top:12px;padding:12px 13px;border:1px solid #ead9b3;background:#fffaf0;border-radius:12px;color:#66512a;font-size:11px;line-height:1.7}
 .status{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}
 .status h2{font-size:16px;margin:0 0 8px}.status p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
 .status strong{color:var(--text)}
 .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
 .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:11px;padding:10px 13px;font-size:12px;font-weight:900;border:1px solid var(--line);background:#fff;color:var(--text)}
 .btn.primary{background:#17191c;color:#fff;border-color:#17191c}
-.btn.disabled{opacity:.55;cursor:not-allowed;pointer-events:none}
 .foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.65}
 @media(max-width:650px){.top{display:block}.badge{display:inline-block;margin-top:12px}.grid,.flow-grid{grid-template-columns:1fr}}
 </style>
@@ -47,13 +52,14 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
   <div class="top">
     <div>
       <h1>🎬 影音工具</h1>
-      <div class="sub">影片、音樂不用先上傳到網站。轉檔、字幕、分割／合併，以及從影片抽出圖片或 MP3，都由 PrintReady Desktop 在你的電腦本機處理。</div>
+      <div class="sub">為了讓長影片、字幕與轉檔跑得更快、更穩，影音工具使用 Windows 桌面版處理。影片不需要先上傳到網站，工作會在你的電腦本機完成。</div>
       <a class="back" href="../index.html">← 回到幫我印好</a>
     </div>
     <div class="badge">DESKTOP｜RC3 正式版</div>
   </div>
 
-  <div class="local">🔒 影音工具在你的電腦本機處理。大型影片不需要先上傳到網站，也不會影響「幫我印好」原本的列印／PDF 工具。</div>
+  <div class="local">🔒 <strong>影音檔不會先上傳到「幫我印好」網站。</strong> 下載桌面版後，轉檔、字幕、分割／合併與素材抽取都在你的電腦處理。</div>
+  <div class="notice"><strong>先說清楚：這不是「打開網頁就直接處理影片」的線上版。</strong><br>需要先下載一次 Windows 桌面版。這樣做是為了讓大型影片與字幕處理能直接使用你的電腦效能，不必把大檔案上傳到網路上。</div>
 
   <div class="grid">
     <div class="card"><div class="icon">🔄</div><h2>影片／音樂轉檔</h2><p>影片與音樂格式互轉，可輸出 MP4、MP3 等常見格式。MP3 可選 128 kbps（檔案較小）或 192 kbps（音質較好）。</p></div>
@@ -63,31 +69,37 @@ h1{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.04em}
   </div>
 
   <div class="flow">
-    <h2>怎麼使用？</h2>
+    <h2>第一次使用｜下載後怎麼開？</h2>
     <div class="flow-grid">
-      <div class="flow-step"><b>1️⃣ 下載 Windows 桌面版</b><span>RC3 已正式封版，點下方按鈕即可下載 Windows 桌面版。</span></div>
-      <div class="flow-step"><b>2️⃣ 放入影片或音訊</b><span>檔案直接交給你的電腦處理，不需要先把大型影片上傳到網站。</span></div>
-      <div class="flow-step"><b>3️⃣ 選功能並下載結果</b><span>完成後直接取得需要的 MP4、MP3、字幕或 ZIP。</span></div>
+      <div class="flow-step"><b>1️⃣ 下載 ZIP</b><span>按下方「下載 Windows RC3」。下載完成後，先把 ZIP 完整解壓縮，不要直接在 ZIP 裡開程式。</span></div>
+      <div class="flow-step"><b>2️⃣ 打開桌面版</b><span>進入解壓縮後的資料夾，雙擊下面這個檔案：</span><span class="file-name">PrintReady_Desktop_V1_RC3.exe</span></div>
+      <div class="flow-step"><b>3️⃣ 放入影片開始使用</b><span>開啟後就能直接轉檔、做字幕、分割／合併或抽取素材。處理結果會存回你的電腦。</span></div>
     </div>
-    <div class="platform">目前桌面版以 Windows 為主。RC3 已正式封版並開放下載。</div>
+    <div class="platform">這是免安裝的 Windows 桌面版。請保留整個解壓縮後的資料夾，不要只把執行檔單獨搬走。</div>
+  </div>
+
+  <div class="why">
+    <h2>為什麼不是全部放在網頁裡？</h2>
+    <p>純網頁處理大型影片時，速度、記憶體與瀏覽器限制會比較多。桌面版可以直接使用你的電腦來處理，因此更適合長影片、永久字幕與大量轉檔。你需要多做的只有「下載一次、解壓縮、開啟程式」。</p>
+    <div class="warning">🛡️ <strong>第一次開啟可能會看到 Windows 安全提示。</strong> 目前版本沒有購買程式碼簽章，因此 Windows 可能跳出 SmartScreen。如果你是從本頁下載，而且檔名是 <strong>PrintReady_Desktop_V1_RC3.exe</strong>，可以選「其他資訊」→「仍要執行」。如果來源或檔名不一樣，請不要執行。</div>
   </div>
 
   <div class="status">
-    <h2>目前狀態</h2>
-    <p><strong>PrintReady Desktop V1 RC3 已正式封版。</strong> 影音處理核心已固定，後續新增功能會從新版本繼續，不直接改動 RC3。Windows 正式下載已開放。</p>
+    <h2>下載正式版</h2>
+    <p><strong>PrintReady Desktop V1 RC3 已正式封版。</strong> 目前提供 Windows x64 版本。後續新增功能會從新版本繼續，不直接改動 RC3。</p>
     <div class="actions">
       <a class="btn primary" href="https://www.dropbox.com/scl/fi/ijsqi01eompbsrk7qfdht/PrintReady_Desktop_V1_RC3_FINAL_SEALED_Windows_x64.zip?rlkey=bycww81yhm2v8ixj9daki9py9&amp;dl=1" target="_blank" rel="noopener">⬇️ 下載 Windows RC3</a>
       <a class="btn" href="../index.html">回主站</a>
     </div>
   </div>
 
-  <div class="foot">幫我印好 PrintReady｜Desktop V1 RC3｜Local processing</div>
+  <div class="foot">幫我印好 PrintReady｜Desktop V1 RC3｜大型影音本機處理</div>
 </div>
 <script>
 window.PrintReadyFeedbackConfig={
   tool:"🎬 影音工具",
   version:"Desktop V1 RC3",
-  features:["影音入口","轉檔","字幕","分割／合併","素材抽取","其他"]
+  features:["影音入口","下載／開啟","轉檔","字幕","分割／合併","素材抽取","其他"]
 };
 </script>
 <script src="../shared/feedback.js"></script>
