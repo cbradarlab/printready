@@ -260,3 +260,56 @@
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
   else init();
 })();
+
+/* PrintReady home media entry candidate.
+   Runs only on the main home page; other tools that share feedback.js are untouched. */
+(function(){
+  "use strict";
+
+  function mountHomeMediaEntry(){
+    const home=document.getElementById("homeStart");
+    if(!home||document.getElementById("printreadyMediaEntry"))return;
+
+    const before=home.querySelector(".home-main-actions");
+    if(!before)return;
+
+    if(!document.getElementById("printreadyMediaEntryStyle")){
+      const style=document.createElement("style");
+      style.id="printreadyMediaEntryStyle";
+      style.textContent=`
+        .media-entry{
+          display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;
+          margin:0 0 11px;padding:13px 14px;border:1px solid #ddd6ea;border-radius:14px;
+          background:#f7f5fb;color:var(--text);text-decoration:none;transition:.16s ease
+        }
+        .media-entry:hover{background:#f2eef9;border-color:#c5b8dc;transform:translateY(-1px)}
+        .media-entry-icon{font-size:26px;line-height:1}
+        .media-entry-title{font-size:14px;font-weight:950;margin-bottom:3px}
+        .media-entry-sub{font-size:11px;line-height:1.5;color:var(--muted)}
+        .media-entry-go{font-size:11px;font-weight:950;color:#66507f;white-space:nowrap}
+        @media(max-width:520px){.media-entry{grid-template-columns:auto minmax(0,1fr)}.media-entry-go{grid-column:2}}
+      `;
+      document.head.appendChild(style);
+    }
+
+    const link=document.createElement("a");
+    link.id="printreadyMediaEntry";
+    link.className="media-entry";
+    link.href="./media/index.html";
+    link.target="_blank";
+    link.rel="noopener";
+    link.setAttribute("aria-label","開啟影音工具（新分頁）");
+    link.innerHTML=`
+      <span class="media-entry-icon">🎬</span>
+      <span>
+        <span class="media-entry-title">影音工具</span>
+        <span class="media-entry-sub">影片／音樂轉檔、字幕、分割、合併、素材抽取，都在你的電腦本機處理。</span>
+      </span>
+      <span class="media-entry-go">開啟 ↗</span>
+    `;
+    home.insertBefore(link,before);
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mountHomeMediaEntry,{once:true});
+  else mountHomeMediaEntry();
+})();
